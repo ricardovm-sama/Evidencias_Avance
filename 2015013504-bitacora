@@ -5,3 +5,20 @@ Fecha: 16/12/2019
 - Se entregó el prototipo completo, la carta de aceptación del prototipo, y se definió el tema del paper.
 - En el frontend se implementó la ventana de ingreso, junto con la validación de sus entradas.
 - En el frontend se avanzó la implementación de las ventanas de modificación de materiales externos.
+
+Fecha: 22/12/2019
+Se realizó: 
+1.	Iteración 1 - ERS  
+2.	Iteración 1 – SAD 
+3.	Iteración 1 – Ejecución (Informe ejecución de pruebas)
+4.	Iteración 1 – Casos de Pruebas  
+5.	Diseño de Base de Datos 
+6.	Conexión a Base de Datos 
+7.	Implementación de la Ventana Registro
+8.	Operaciones CRUD, específicamente: Crear Usuario, Leer Usuario, Crear Material Externo, Leer Material Externo y 
+    Modificar Material Externo.
+9.	App Web se comunica con App servidor
+10.	Funcionalidad Registro
+11.	Funcionalidad Ingreso
+12.	Funcionalidad Buscar
+13.	Funcionalidades de Mantenimiento de Materiales Externos, específicamente: Modificar Materiales Externos.
