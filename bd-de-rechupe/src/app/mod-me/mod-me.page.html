@@ -1,0 +1,28 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/ingreso"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Elegir Material Externo</ion-title>
+  </ion-toolbar>
+  <ion-searchbar showCancelButton="never" (ionChange)="search( $event )"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let materialexterno of materialesexternos | filtro: textoBuscar: 'nombre': 'unidades'" [routerLink]="['./', materialexterno.id]">
+                <ion-label>{{ materialexterno.nombre }}</ion-label>
+                <ion-icon name= "construct"> </ion-icon>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
