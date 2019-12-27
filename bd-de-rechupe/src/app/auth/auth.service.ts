@@ -22,6 +22,10 @@ export class AuthService {
     return this.userId;
   }
 
+  setUserId(obtenido: number) {
+    this.userId = obtenido;
+  }
+
   // Función que permite obtener el valor de una llave del storage
   async getKeyValue(key: string): Promise<any> {
     try {
@@ -46,6 +50,7 @@ export class AuthService {
           await this.storage.set('ACCESS_TOKEN', res.user.access_token);
           await this.storage.set('EXPIRES_IN', res.user.expires_in);
           // await this.storage.set('userId', res.user.id);
+          await this.storage.set('userId', res.user.id);
           this.authSubject.next(true);
         }
       })
@@ -62,6 +67,7 @@ export class AuthService {
           await this.storage.set('ACCESS_TOKEN', res.user.access_token);
           await this.storage.set('EXPIRES_IN', res.user.expires_in);
           // await this.storage.set('userId', res.user.id);
+          await this.storage.set('userId', res.user.id);
           this.authSubject.next(true);
         }
       })
@@ -74,6 +80,7 @@ export class AuthService {
     await this.storage.remove('ACCESS_TOKEN');
     await this.storage.remove('EXPIRES_IN');
     // await this.storage.remove('userId');
+    await this.storage.remove('userId');
     this.authSubject.next(false);
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MaterialexternoService } from '../../materialexterno.service';
-import { MaterialExterno } from '../../materialexterno.model';
+import { ItemService } from '../../../item.service';
+import { MaterialExterno } from '../../../materialexterno.model';
 import { ToastController, AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -16,20 +16,20 @@ export class ModMeDetailPage implements OnInit {
     iduser: 0,
     nombre: '',
     precio: 0,
-    peso: 0.00,
+    unidades_disp: 0,
     unidades: 0,
     marca: ''
   };
 
-  inputmodmenombre: string = '';
-  inputmodmemarca: string = '';
-  inputmodmeprecio: string = '';
-  inputmodmepeso: string = '';
-  inputmodmeunidades: string = '';
+  inputmodmenombre = '';
+  inputmodmemarca = '';
+  inputmodmeprecio = '';
+  inputmodmeunidadesdisp = '';
+  inputmodmeunidades = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private materialexternoService: MaterialexternoService,
+    private materialexternoService: ItemService,
     public toastController: ToastController,
     private  authService: AuthService,
     private router: Router,
@@ -72,10 +72,10 @@ export class ModMeDetailPage implements OnInit {
     const patternNombre = new RegExp('^(?![\s.0-9]+$)[a-zA-Z\s.0-9].{1,31}$');
     const patternMarca = new RegExp('^(?![\s]+$)[a-zA-Z\s.0-9$!%?&].{1,31}$');
     const patternUnidades = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))$');
-    const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
+    // const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
 
     if (this.inputmodmenombre === '' && this.inputmodmemarca === '' && this.inputmodmeprecio === '' &&
-     this.inputmodmepeso === '' && this.inputmodmeunidades === '') {
+     this.inputmodmeunidadesdisp === '' && this.inputmodmeunidades === '') {
       this.onToast('No se ha ingresado ningún valor');
       return;
     }
@@ -88,15 +88,15 @@ export class ModMeDetailPage implements OnInit {
       return;
     }
     if (this.inputmodmeprecio !== '' && !patternUnidades.test(this.inputmodmeprecio)) {
-      this.onToast('El precio no es válido');
+      this.onToast('El precio de referencia no es válido');
       return;
     }
-    if (this.inputmodmepeso !== '' && !patternPeso.test(this.inputmodmepeso)) {
-      this.onToast('El peso no es válido');
+    if (this.inputmodmeunidadesdisp !== '' && !patternUnidades.test(this.inputmodmeunidadesdisp)) {
+      this.onToast('Las unidades disponibles no son válidas');
       return;
     }
     if (this.inputmodmeunidades !== '' && !patternUnidades.test(this.inputmodmeunidades)) {
-      this.onToast('Las unidades no son válidas');
+      this.onToast('Las unidades de referencia no son válidas');
       return;
     }
     // Los datos de los inputs son correctos
@@ -111,12 +111,12 @@ export class ModMeDetailPage implements OnInit {
         handler: () => {
           const cloneObject = Object.assign({}, this.loadedMaterialExterno);
           this.materialexternoService.modicarMaterialExterno(cloneObject, this.inputmodmenombre,
-          this.inputmodmemarca, this.inputmodmeprecio, this.inputmodmepeso, this.inputmodmeunidades).subscribe((res) => {
+          this.inputmodmemarca, this.inputmodmeprecio, this.inputmodmeunidadesdisp, this.inputmodmeunidades).subscribe((res) => {
             if (res.data.nombre) { // Si existe
               this.loadedMaterialExterno.nombre = res.data.nombre;
               this.loadedMaterialExterno.marca = res.data.marca;
               this.loadedMaterialExterno.precio = res.data.precio;
-              this.loadedMaterialExterno.peso = res.data.peso;
+              this.loadedMaterialExterno.unidades_disp = res.data.unidades_disp;
               this.loadedMaterialExterno.unidades = res.data.unidades;
               this.onToast('Operación exitosa!'); // Desplegar mensaje de éxito
               this.router.navigate(['/mod-me']); // Redireccionar a la página anterior

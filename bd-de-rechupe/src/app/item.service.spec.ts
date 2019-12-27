@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { ItemService } from './item.service';
 
-import { MaterialexternoService } from '../materialexterno.service';
+
 
 describe('MaterialexternoService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MaterialexternoService = TestBed.get(MaterialexternoService);
+    const service: ItemService = TestBed.get(ItemService);
     expect(service).toBeTruthy();
   });
 });

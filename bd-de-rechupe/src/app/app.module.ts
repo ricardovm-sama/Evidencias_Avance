@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { PipesModule } from './pipes/pipes.module';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { PipesModule } from './pipes/pipes.module';
     PipesModule,
     IonicStorageModule.forRoot(),
     AppRoutingModule,
+    ComponentsModule,
     AuthModule],
   providers: [
     StatusBar,

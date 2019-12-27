@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
+
 
 @Component({
   selector: 'app-registro',
@@ -32,7 +33,7 @@ export class RegistroPage implements OnInit {
   onRegistrarUsuario(form) {
     this.authService.registrarUsuario(form.value).subscribe((res) => {
     this.onToast('Operación exitosa!'); // Desplegar mensaje de éxito
-    this.router.navigate(['/mod-me']); // CAMBIAR PARA NAVEGAR A PAGINA PRINCIPAL
+    this.router.navigate(['/mainmenu']); // NAVEGAR A PAGINA PRINCIPAL
     });
   }
 }

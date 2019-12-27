@@ -4,19 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ModMePageRoutingModule } from './mod-me-routing.module';
+import { MainmenuPageRoutingModule } from './mainmenu-routing.module';
 
-import { ModMePage } from './mod-me.page';
-import { PipesModule } from '../pipes/pipes.module';
+import { MainmenuPage } from './mainmenu.page';
+import { Routes, RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModMePageRoutingModule,
-    PipesModule
+    MainmenuPageRoutingModule
   ],
-  declarations: [ModMePage]
+  declarations: [MainmenuPage]
 })
-export class ModMePageModule {}
+export class MainmenuPageModule {}

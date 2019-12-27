@@ -1,0 +1,48 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mainmenu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Elegir Ítems</ion-title>
+  </ion-toolbar>
+  <ion-searchbar showCancelButton="never" (ionChange)="search( $event )"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+                <ion-item *ngFor="let receta of recetas | filtro: textoBuscar: 'nombre': 'id'; let i = index">
+                  <ion-label class='fixedLabel'>{{ receta.nombre }}</ion-label>
+                  <ion-input #inputentry ngModel (keyup.enter)="addValue(inputentry.value, i, 1, inputentry, receta.id)"
+                  (ionBlur)="addValue(inputentry.value, i, 1, inputentry, receta.id)" color="primary" placeholder="0.00" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+                  <ion-icon name="logo-buffer"></ion-icon>               
+                </ion-item>  
+            
+              <ion-item *ngFor="let ingrediente of ingredientes | filtro: textoBuscar: 'nombre': 'peso'; let i = index">
+                <ion-label class='fixedLabel'>{{ ingrediente.nombre }}</ion-label>
+                <ion-input #inputentry2 ngModel (keyup.enter)="addValue(inputentry2.value, i, 2, inputentry2, ingrediente.id)"
+                (ionBlur)="addValue(inputentry2.value, i, 2, inputentry2, ingrediente.id)" color="primary" placeholder="0.00" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+                <ion-icon name="nutrition"></ion-icon>
+              </ion-item>
+
+              <ion-item *ngFor="let materialexterno of materialesexternos | filtro: textoBuscar: 'nombre': 'unidades'; let i = index">
+                <ion-label class='fixedLabel'>{{ materialexterno.nombre }}</ion-label>
+                <ion-input #inputentry3 ngModel (keyup.enter)="addValue(inputentry3.value, i, 3, inputentry3, materialexterno.id)"
+                (ionBlur)="addValue(inputentry3.value, i, 3, inputentry3, materialexterno.id)" color="primary" placeholder="0.00" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>                
+                <ion-icon name= "construct"> </ion-icon>
+              </ion-item>
+            </ion-list>
+            <div ion-margin-vertical ion-text-right>
+              <ion-button (click)="abrirModal()" expand="full">Costos</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

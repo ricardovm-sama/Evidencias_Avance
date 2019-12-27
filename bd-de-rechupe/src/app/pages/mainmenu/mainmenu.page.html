@@ -1,0 +1,50 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+    <!-- <ion-button (click)="toggleMenu()">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>-->
+    <ion-menu-button color="primary" menu="mainmenu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="primary">Página Principal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+  <ion-menu side="start" menuId="mainmenu" contentId="content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menú Principal</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
+          <ion-item [routerLink]="page.url">
+            <ion-icon color="primary" slot="start" [name]="page.icon"></ion-icon>
+            <ion-label>{{ page.title }}</ion-label> 
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="content" main></ion-router-outlet>
+    <style>
+      body {
+        background-image: url('../assets/images/pastelespeq.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      </style>
+      <body></body>
+ <!--     <body>
+
+        <h2>Background Cover</h2>
+        
+        <p>Set the background-size property to "cover" and the background image will cover the entire element, in this case the BODY element.</p>
+        
+      </body> -->
+
+

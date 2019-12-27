@@ -3,7 +3,7 @@ id: number;
 iduser: number;
 nombre: string;
 precio: number;
-peso: number;
 unidades: number;
+unidades_disp: number;
 marca: string;
 }

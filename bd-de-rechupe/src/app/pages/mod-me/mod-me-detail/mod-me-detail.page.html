@@ -22,16 +22,16 @@
               <ion-input placeholder="{{loadedMaterialExterno.marca}}" type="text" [(ngModel)]="inputmodmemarca" pattern="^(?![\s]+$)[a-zA-Z\s.0-9$!%?&].{1,31}$" minlength="1" maxlength="31"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="floating">Precio (₡)</ion-label>
+              <ion-label position="floating">Precio de referencia (₡)</ion-label>
               <ion-input placeholder="{{loadedMaterialExterno.precio}}" type="text" [(ngModel)]="inputmodmeprecio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
-            </ion-item>
+            </ion-item>           
             <ion-item>
-              <ion-label position="floating">Peso por unidad (g)</ion-label>
-              <ion-input placeholder="{{loadedMaterialExterno.peso}}" type="text" [(ngModel)]="inputmodmepeso" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Unidades</ion-label>
+              <ion-label position="floating">Unidades de referencia</ion-label>
               <ion-input placeholder="{{loadedMaterialExterno.unidades}}" type="text" [(ngModel)]="inputmodmeunidades" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Unidades disponibles</ion-label>
+              <ion-input placeholder="{{loadedMaterialExterno.unidades_disp}}" type="text" [(ngModel)]="inputmodmeunidadesdisp" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
             </ion-item>
             <div ion-margin-vertical ion-text-right>
               <ion-button (click)="OnModicarMaterialExterno()">Modificar Material Externo</ion-button>

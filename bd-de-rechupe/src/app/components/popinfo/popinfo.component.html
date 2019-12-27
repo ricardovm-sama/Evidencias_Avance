@@ -1,0 +1,8 @@
+<ion-list>
+  <ion-item *ngFor="let item of items; let i = index;" detail>
+    <ion-label>Item {{ i + 1 }}</ion-label>
+  </ion-item>
+</ion-list>
+  <div ion-margin-vertical ion-text-right>
+    <ion-button (click)="cerrarPopover()" expand="full">Cerrar</ion-button>
+  </div>
