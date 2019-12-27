@@ -43,7 +43,7 @@ const  createMaterialExternoTable  = () => {
         nombre text NOT NULL,
         precio integer NOT NULL,
         unidades integer NOT NULL,
-        peso real,
+        unidades_disp integer NOT NULL,
         marca text,
         FOREIGN KEY(iduser) REFERENCES user(id)
         )`;
@@ -60,6 +60,7 @@ const  createIngredienteTable  = () => {
         nombre text NOT NULL,
         precio integer NOT NULL,
         peso real NOT NULL,
+        peso_disp real NOT NULL,
         energia integer,
         proteina real,
         grasa real,
@@ -93,7 +94,7 @@ const  createReceta_RecetaTable  = () => {
         idreceta integer NOT NULL,
         idsubreceta integer NOT NULL,
         iduser integer NOT NULL,
-        unidades integer NOT NULL,
+        cantidad real NOT NULL,
         FOREIGN KEY(iduser) REFERENCES user(id),
         FOREIGN KEY(idreceta) REFERENCES receta(id),
         FOREIGN KEY(idsubreceta) REFERENCES receta(id)
@@ -133,25 +134,109 @@ const  createReceta_MaterialExternoTable  = () => {
 
     return  db.run(sqlQuery);
 }
+
+//Función que crea la tabla Temporada, en caso de que la tabla no exista.
+const  createTemporadaTable  = () => {
+    const  sqlQuery  =  `
+        CREATE TABLE IF NOT EXISTS temporada (
+        idingrediente NOT NULL,
+        temporada text NOT NULL,
+        FOREIGN KEY(idingrediente) REFERENCES ingrediente(id)
+        )`;
+
+    return  db.run(sqlQuery);
+}
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
 // ################################################################################################################################
 // INSERTAR DATOS DE PRUEBA
 //Usuarios
-const insertUsuarios = () => {
+const insertUsuario1 = () => {
+    const insert = 'INSERT INTO user (name, email, password) VALUES (?,?,?)';
+    db.run(insert, ['Aragox','ree@hhh.coo',bcrypt.hashSync('Mermela1.')])
+    }
+
+const insertUsuario2 = () => {
     const insert = 'INSERT INTO user (name, email, password) VALUES (?,?,?)';
     db.run(insert, ['Mr Anderson','pez1@test.gol.do',bcrypt.hashSync('Sm1penult.')])
-    db.run(insert, ['Aragox','ree@hhh.coo',bcrypt.hashSync('Mermela1.')])
     }
 
 //Materiales externos
 const insertMaterialesExternos = () => {
-    db.run(`INSERT INTO materialexterno (iduser,nombre,precio,unidades,peso,marca) 
+    db.run(`INSERT INTO materialexterno (iduser,nombre,precio,unidades,unidades_disp,marca) 
     VALUES 
-       (1,'Papel',800,1,10.00,'Soft'),
-       (1,'Cuerda',200,3,15.60,"Aladino"),
-       (2,'Lazo',450,6,6.70,'Guntera'),
-       (2,'Pirotines',600,7,9.50,'Ventnor');`);
+       (2,'Papel',800,1,6,'Soft'),
+       (2,'Cuerda',200,3,8,"Aladino"),
+       (1,'El Plato Fantástico',450,6,20,'Patito'),
+       (1,'Servilleta',600,7,15,'Ventnor');`);
+    }
+
+//Ingredientes
+const insertIngredientes = () => {
+    db.run(`INSERT INTO ingrediente (iduser,nombre,precio,peso,peso_disp,energia,proteina,grasa,carbohidratos,fibra,colesterol,sodio) 
+    VALUES 
+       (2,'Papa',400,58.40,560.62,50,2.50,0.36,6.21,3.21,0,0),
+       (2,'Guayaba',200,61.90,425.80,60,1.35,0.15,10.49,1.23,0,0),
+       (1,'Manzana',450,65.00,758.28,52,2.12,0.16,12.54,4.52,0,0),
+       (1,'Fresa',200,20.23,127.05,28,1.12,0.09,5.50,2.82,0,0),
+       (1,'Harina',600,1000.00,3500.02,300,58.32,6.48,25.10,8.11,2,1),
+       (1,'Cereza',400,20.10,520.62,40,3.32,4.48,5.10,2.11,0,0);`);
+    }
+
+//Ingredientes
+const insertRecetas = () => {
+    db.run(`INSERT INTO receta (iduser,nombre) 
+    VALUES 
+       (2,'Pastel de Cereza'),
+       (2,'Pie de Fresa'),
+       (1,'Alfajor'),
+       (1,'Queque 2 Pisos'),
+       (1,'Queque'),
+       (1,'Orden AlfQueque'),
+       (1,'Pie de Manzana');`);
+    }
+
+//Receta_Receta
+const insertReceta_Receta = () => {
+    db.run(`INSERT INTO receta_receta (iduser,idreceta,idsubreceta,cantidad) 
+    VALUES 
+       (1,4,5,2.00),
+       (1,6,5,0.50),
+       (1,6,3,6.00);`);
+    }
+
+//Receta_Ingrediente
+const insertReceta_Ingrediente = () => {
+    db.run(`INSERT INTO receta_ingrediente (iduser,idreceta,idingrediente,peso) 
+    VALUES 
+       (1,3,5,9.00),
+       (1,4,4,10.00),
+       (1,5,5,150.00),
+       (1,7,3,15.00),
+       (1,7,5,40.00);`);
+    }
+
+//Receta_MaterialExterno
+const insertReceta_MaterialExterno = () => {
+    db.run(`INSERT INTO receta_materialexterno (iduser,idreceta,idmaterialexterno,unidades) 
+    VALUES 
+       (1,3,1,1),
+       (1,4,3,1),
+       (1,5,4,2),
+       (1,7,1,1);`);
+    }
+
+//Temporadas
+const insertTemporadas = () => {
+    db.run(`INSERT INTO temporada (idingrediente,temporada) 
+    VALUES 
+       (3,'Enero'),
+       (3,'Febrero'),
+       (4,'Febrero'),
+       (4,'Marzo'),
+       (5,'Diciembre'),
+       (6,'Noviembre'),
+       (6,'Febrero');`);
     }
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -164,9 +249,16 @@ createRecetaTable();
 createReceta_RecetaTable();
 createReceta_IngredienteTable();
 createReceta_MaterialExternoTable();
+createTemporadaTable();
 
-// insertUsuarios(); // Hacer inserts
-// insertMaterialesExternos();    
+// insertUsuario1(); // Hacer inserts
+// insertUsuario2();
+// insertMaterialesExternos(); 
+// insertIngredientes();
+// insertRecetas();   
+// insertReceta_Receta();
+// insertReceta_Ingrediente();
+// insertReceta_MaterialExterno();
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
 // ################################################################################################################################
@@ -184,7 +276,7 @@ const  createUser  = (user, cb) => {
         cb(err)
     });
 }
-
+/*
 const  findMaterialExternoByID  = (id, cb) => {
     return  db.get(`SELECT * FROM user WHERE id = ?`,[id], (err, row) => {
             cb(err, row)
@@ -215,7 +307,7 @@ const moficarMEById = (id, material, result) => {
                   console.log("updated ME: ", { id: id, ...customer });
                   result(null, { id: id, ...customer });
             });
-        }
+        }*/
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
 // ################################################################################################################################
@@ -387,6 +479,299 @@ router.get("/api/materialexterno/:id", (req, res, next) => {
       });
 });
 
+router.get("/api/materialexterno/mod/:id/:nombre/:precio/:unidades_disp/:unidades/:marca", (req, res, next) => {
+const data = {
+        nombre: req.params.nombre,
+        precio: req.params.precio,
+        unidades_disp: req.params.unidades_disp,
+        unidades: req.params.unidades,
+        marca: req.params.marca
+    } 
+    db.run(
+        `UPDATE materialexterno set
+           nombre = ?, 
+           precio = ?, 
+           unidades_disp = ?, 
+           unidades = ?,
+           marca = ?
+           WHERE id = ?`,
+        [data.nombre, data.precio, data.unidades_disp, data.unidades, data.marca, req.params.id],
+        (err, result) => {
+            if (err){
+                res.status(400).json({"error":err.message});
+                return;
+            }
+            res.json({
+                "message": "success",
+                "data": data
+            })
+    });
+
+})
+
+// --------------------------------------------------------------------------------------------------------------------------------
+//INGREDIENTES
+// --------------------------------------------------------------------------------------------------------------------------------
+router.get("/api/ingredientes/:id", (req, res, next) => {
+    var sql = "select * from ingrediente where iduser = ? ORDER BY nombre ASC, peso ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/ingrediente/:id", (req, res, next) => {
+    var sql = "select * from ingrediente WHERE id = ?"
+    var params = [req.params.id]
+    db.get(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+      });
+});
+
+router.get("/api/ingrediente/mod/:id/:nombre/:precio/:peso_disp/:peso/:energia/:proteina/:grasa/:carbohidratos/:fibra/:colesterol/:sodio", (req, res, next) => {
+const data = {
+        nombre: req.params.nombre,
+        precio: req.params.precio,
+        peso_disp: req.params.peso_disp,
+        peso: req.params.peso,
+        energia: req.params.energia,
+        proteina: req.params.proteina,
+        grasa: req.params.grasa,
+        carbohidratos: req.params.carbohidratos,
+        fibra: req.params.fibra,
+        colesterol: req.params.colesterol,
+        sodio: req.params.sodio
+    } 
+    db.run(
+        `UPDATE ingrediente set
+           nombre = ?, 
+           precio = ?,
+           peso_disp = ?, 
+           peso = ?, 
+           energia = ?,
+           proteina = ?,
+           grasa = ?,
+           carbohidratos = ?,
+           fibra = ?,
+           colesterol = ?,
+           sodio = ?
+           WHERE id = ?`,
+        [data.nombre, data.precio, data.peso_disp, data.peso, data.energia, data.proteina, data.grasa, data.carbohidratos,
+            data.fibra, data.colesterol, data.sodio, req.params.id],
+        (err, result) => {
+            if (err){
+                res.status(400).json({"error":err.message});
+                return;
+            }
+            res.json({
+                "message": "success",
+                "data": data
+            })
+    });
+
+});
+
+// --------------------------------------------------------------------------------------------------------------------------------
+//RECETAS
+// --------------------------------------------------------------------------------------------------------------------------------
+router.get("/api/recetas/:id", (req, res, next) => {
+    var sql = "select * from receta where iduser = ? ORDER BY nombre ASC, id ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta/:id", (req, res, next) => {
+    var sql = "select * from receta WHERE id = ?"
+    var params = [req.params.id]
+    db.get(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+      });
+});
+
+// --------------------------------------------------------------------------------------------------------------------------------
+//RECETA_RECETA
+// --------------------------------------------------------------------------------------------------------------------------------
+router.get("/api/recetas_recetas/:id", (req, res, next) => {
+    var sql = "select * from receta_receta where iduser = ? ORDER BY cantidad ASC, idreceta ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta_recetas/:id/:idreceta", (req, res, next) => {
+    var sql = "select * from receta_receta where iduser = ? and idreceta = ? ORDER BY cantidad ASC, idreceta ASC"
+    var params = [req.params.id, req.params.idreceta]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta_receta/:id/:idreceta/:idsubreceta", (req, res, next) => {
+    var sql = "select * from receta_receta WHERE iduser = ? and idreceta = ? and idsubreceta = ?"
+    var params = [req.params.id, req.params.idreceta, req.params.idsubreceta]
+    db.get(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+      });
+});
+
+// --------------------------------------------------------------------------------------------------------------------------------
+//RECETA_INGREDIENTE
+// --------------------------------------------------------------------------------------------------------------------------------
+router.get("/api/recetas_ingredientes/:id", (req, res, next) => {
+    var sql = "select * from receta_ingrediente where iduser = ? ORDER BY peso ASC, idreceta ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta_ingredientes/:id/:idreceta", (req, res, next) => {
+    var sql = "select * from receta_ingrediente where iduser = ? and idreceta = ? ORDER BY peso ASC, idreceta ASC"
+    var params = [req.params.id, req.params.idreceta]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta_ingrediente/:id/:idreceta/:idingrediente", (req, res, next) => {
+    var sql = "select * from receta_ingrediente WHERE iduser = ? and idreceta = ? and idingrediente = ?"
+    var params = [req.params.id, req.params.idreceta, req.params.idingrediente]
+    db.get(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+      });
+});
+
+// --------------------------------------------------------------------------------------------------------------------------------
+//RECETA_MATERIAL EXTERNO
+// --------------------------------------------------------------------------------------------------------------------------------
+router.get("/api/recetas_materialesexternos/:id", (req, res, next) => {
+    var sql = "select * from receta_materialexterno where iduser = ? ORDER BY unidades ASC, idreceta ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta_materialesexternos/:id/:idreceta", (req, res, next) => {
+    var sql = "select * from receta_materialexterno where iduser = ? and idreceta = ? ORDER BY unidades ASC, idreceta ASC"
+    var params = [req.params.id, req.params.idreceta]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+router.get("/api/receta_materialexterno/:id/:idreceta/:idmaterialexterno", (req, res, next) => {
+    var sql = "select * from receta_materialexterno WHERE iduser = ? and idreceta = ? and idmaterialexterno = ?"
+    var params = [req.params.id, req.params.idreceta, req.params.idmaterialexterno]
+    db.get(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+      });
+});
+
+// ################################################################################################################################
+// --------------------------------------------------------------------------------------------------------------------------------
+// ################################################################################################################################
+// PUERTO SERVIDOR
+app.use(router);
+const  port  =  process.env.PORT  ||  3000;
+const  server  =  app.listen(port, () => {
+    console.log('Server listening at http://localhost:'  +  port);
+}); 
+
 /*router.put('/api/materialexterno/mod/:id', (req, res) => { // Modificar Material Externo
 
 
@@ -423,43 +808,3 @@ router.get("/api/materialexterno/:id", (req, res, next) => {
   );
 });
 */
-
-router.get("/api/materialexterno/mod/:id/:nombre/:precio/:peso/:unidades/:marca", (req, res, next) => {
-const data = {
-        nombre: req.params.nombre,
-        precio: req.params.precio,
-        peso: req.params.peso,
-        unidades: req.params.unidades,
-        marca: req.params.marca
-    } 
-    db.run(
-        `UPDATE materialexterno set
-           nombre = ?, 
-           precio = ?, 
-           peso = ?, 
-           unidades = ?,
-           marca = ?
-           WHERE id = ?`,
-        [data.nombre, data.precio, data.peso, data.unidades, data.marca, req.params.id],
-        (err, result) => {
-            if (err){
-                res.status(400).json({"error":err.message});
-                return;
-            }
-            res.json({
-                "message": "success",
-                "data": data
-            })
-    });
-
-})
-
-// ################################################################################################################################
-// --------------------------------------------------------------------------------------------------------------------------------
-// ################################################################################################################################
-// PUERTO SERVIDOR
-app.use(router);
-const  port  =  process.env.PORT  ||  3000;
-const  server  =  app.listen(port, () => {
-    console.log('Server listening at http://localhost:'  +  port);
-}); 
