@@ -8,13 +8,15 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalInfoPage implements OnInit {
 
-  @Input() pais;
+  @Input() obj; // Recibe datos
+  @Input() titulomodal;
 
   constructor( private modalCtrl: ModalController ) { }
 
   ngOnInit() {
   }
 
+  // Función que cierra el modal
   salir() {
     this.modalCtrl.dismiss();
   }

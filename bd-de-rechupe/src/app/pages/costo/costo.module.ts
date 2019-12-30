@@ -8,14 +8,14 @@ import { CostoPageRoutingModule } from './costo-routing.module';
 
 import { CostoPage } from './costo.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-import { PopinfoComponent } from 'src/app/components/popinfo/popinfo.component';
-import { ComponentsModule } from 'src/app/components/components.module';
+// import { PopinfoComponent } from 'src/app/components/popinfo/popinfo.component';
+// import { ComponentsModule } from 'src/app/components/components.module';
 import { ModalInfoPage } from '../modal-info/modal-info.page';
 import { ModalInfoPageModule } from '../modal-info/modal-info.module';
 
 @NgModule({
   entryComponents: [
-    PopinfoComponent,
+//    PopinfoComponent,
     ModalInfoPage
   ],
   imports: [
@@ -24,7 +24,7 @@ import { ModalInfoPageModule } from '../modal-info/modal-info.module';
     IonicModule,
     CostoPageRoutingModule,
     PipesModule,
-    ComponentsModule,
+//    ComponentsModule,
     ModalInfoPageModule
   ],
   declarations: [CostoPage]

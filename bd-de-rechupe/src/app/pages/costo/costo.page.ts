@@ -28,6 +28,8 @@ export class CostoPage implements OnInit {
   mtevalores: Cantidad[] = [];
   textoBuscar = '';
 
+  cifras = 3;
+
   constructor(
     private itemService: ItemService,
     private  authService: AuthService,
@@ -71,108 +73,103 @@ export class CostoPage implements OnInit {
       });
     }
   }
-
-  // Función que obtiene el texto introducido en la barra de búsqueda
-  search( event ) {
-    this.textoBuscar = event.detail.value;
-  }
-
-  getObjetoById(id: number, tipo: number) {
-    switch (tipo) {
-      case 1:
-        return this.rctvalores.filter( item => {
-          if (item) {
-            return item.id === id;
-          }
-          return null;
-        });
-      case 2:
-        return this.ingvalores.filter( item => {
-          if (item) {
-            return item.id === id;
-          }
-          return null;
-        });
-      case 3:
-        return this.mtevalores.filter( item => {
-          if (item) {
-            return item.id === id;
-          }
-          return null;
-        });
-      }
-  }
-
-  borrarElementosContenidos(index: number, tipo: number) {
-    let valores: Cantidad[] = [];
-    valores = this.getObjetoById(index, tipo);
-
-    if (typeof(valores) !== 'undefined' && valores.length > 0) { // La entrada del input ya se había guardado.
-      console.log('Se remueve la entrada del arreglo');
-      switch (tipo) {
-      case 1:
-        this.rctvalores = this.rctvalores.filter( item => { // Se remueve el elemento del array
-          return valores.indexOf( item ) < 0;
+// Función que obtiene un ítem usando su id de ítem (en distintos arreglos dependiendo del tipo del ítem)
+getObjetoById(id: number, tipo: number) {
+  switch (tipo) {
+    case 1:// Si son recetas, ingredientes o materiales externos
+      return this.rctvalores.filter( item => {
+        if (item) {
+          return item.iditem === id;
+        }
+        return null;
       });
-        console.log('Largo Arreglo: ' + this.rctvalores.length);
-        break;
-      case 2:
-        this.ingvalores = this.ingvalores.filter( item => { // Se remueve el elemento del array
-          return valores.indexOf( item ) < 0;
+    case 2:
+      return this.ingvalores.filter( item => {
+        if (item) {
+          return item.iditem === id;
+        }
+        return null;
       });
-        console.log('Largo Arreglo: ' + this.ingvalores.length);
-        break;
-      case 3:
-        this.mtevalores = this.mtevalores.filter( item => { // Se remueve el elemento del array
-          return valores.indexOf( item ) < 0;
+    case 3:
+      return this.mtevalores.filter( item => {
+        if (item) {
+          return item.iditem === id;
+        }
+        return null;
       });
-        console.log('Largo Arreglo: ' + this.mtevalores.length);
-        break;
-      }
     }
-    return;
-  }
+}
+// Función que borra un ítem (en distintos arreglos dependiendo del tipo del ítem)
+borrarElementosContenidos(id: number, tipo: number) {
+  let valores: Cantidad[] = [];
+  valores = this.getObjetoById(id, tipo);
 
-  addValue(valor: string, index: number, tipo: number, entry: any, iditems: number) {
+  if (typeof(valores) !== 'undefined' && valores.length > 0) { // La entrada del input ya se había guardado.
+    console.log('Se remueve la entrada del arreglo');
+    switch (tipo) {
+    case 1:// Si son recetas, ingredientes o materiales externos
+      this.rctvalores = this.rctvalores.filter( item => { // Se remueve el elemento del array
+        return valores.indexOf( item ) < 0;
+    });
+      console.log('Largo Arreglo: ' + this.rctvalores.length);
+      break;
+    case 2:
+      this.ingvalores = this.ingvalores.filter( item => { // Se remueve el elemento del array
+        return valores.indexOf( item ) < 0;
+    });
+      console.log('Largo Arreglo: ' + this.ingvalores.length);
+      break;
+    case 3:
+      this.mtevalores = this.mtevalores.filter( item => { // Se remueve el elemento del array
+        return valores.indexOf( item ) < 0;
+    });
+      console.log('Largo Arreglo: ' + this.mtevalores.length);
+      break;
+    }
+  }
+  return;
+}
+
+  // Función que va guardando los inputs del usuario (en distintos arreglos dependiendo del tipo del ítem)
+  addValue(tipo: number, entry: any, iditems: number) {
+    const valor = entry.value;
     const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
 
     if ((valor === '' || valor === '0.00') || (valor !== '' && !patternPeso.test(valor))) {
-      this.borrarElementosContenidos(index, tipo);
+      this.borrarElementosContenidos(iditems, tipo);
       entry.value = ''; // Restablecer el placeholder
       entry.placeholder = '0.00';
       return;
     }
 
     let valores: Cantidad[] = [];
-    valores = this.getObjetoById(index, tipo);
+    valores = this.getObjetoById(iditems, tipo);
 
     if (typeof(valores) !== 'undefined' && valores.length > 0) { // La entrada del input ya se había guardado.
        console.log('Ya se había guardado el valor del input');
        valores[0].cantidad = Number(valor);
-       valores[0].iditem = iditems;
-       console.log('ID: ' + valores[0].id + ', Valor asignado: ' + valores[0].cantidad);
+       console.log('IDItem: ' + valores[0].iditem + ', Valor asignado: ' + valores[0].cantidad);
     } else { // Sino, la entrada del input se guarda por primera vez con push
       const item: Cantidad = {
-        id: index,
         iditem: iditems,
         cantidad: Number(valor)
       };
-      switch (tipo) {
+      switch (tipo) { // Si son recetas, ingredientes o materiales externos
         case 1:
             this.rctvalores.push(item);
-            console.log('ID: ' + this.rctvalores[this.rctvalores.length - 1].id + ', Valor asignado: '
+            console.log('IDItem: ' + this.rctvalores[this.rctvalores.length - 1].iditem + ', Valor asignado: '
             + this.rctvalores[this.rctvalores.length - 1].cantidad);
             console.log('Largo Arreglo: ' + this.rctvalores.length);
             break;
         case 2:
             this.ingvalores.push(item);
-            console.log('ID: ' + this.ingvalores[this.ingvalores.length - 1].id + ', Valor asignado: '
+            console.log('IDItem: ' + this.ingvalores[this.ingvalores.length - 1].iditem + ', Valor asignado: '
             + this.ingvalores[this.ingvalores.length - 1].cantidad);
             console.log('Largo Arreglo: ' + this.ingvalores.length);
             break;
         case 3:
             this.mtevalores.push(item);
-            console.log('ID: ' + this.mtevalores[this.mtevalores.length - 1].id + ', Valor asignado: '
+            console.log('IDItem: ' + this.mtevalores[this.mtevalores.length - 1].iditem + ', Valor asignado: '
             + this.mtevalores[this.mtevalores.length - 1].cantidad);
             console.log('Largo Arreglo: ' + this.mtevalores.length);
             break;
@@ -186,8 +183,8 @@ export class CostoPage implements OnInit {
       if (rctitem.idreceta === recetaId) {
         this.ingredientes.forEach( ing => {
           if (rctitem.idingrediente === ing.id) { // Buscar ingredientes que coinciden con los del usuario
-            const rescosto = Number(((ing.precio / ing.peso) * item.cantidad * rctitem.peso).toFixed(2));
-            suma = suma + rescosto;
+            const rescosto = Number(((ing.precio / ing.peso) * item.cantidad * rctitem.peso).toFixed(this.cifras));
+            suma = Number((suma + rescosto).toFixed(this.cifras));
             console.log('Ingrediente: ' + ing.nombre + ', Rescosto: ' + rescosto);
           }
         });
@@ -198,8 +195,8 @@ export class CostoPage implements OnInit {
       if (rctitem.idreceta === recetaId) {
         this.materialesexternos.forEach( mte => {
           if (rctitem.idmaterialexterno === mte.id) { // Buscar materiales externos que coinciden con los del usuario
-            const rescosto = Number(((mte.precio / mte.unidades) * Math.ceil(item.cantidad) * rctitem.unidades).toFixed(2));
-            suma = suma + rescosto;
+            const rescosto = Number(((mte.precio / mte.unidades) * Math.ceil(item.cantidad) * rctitem.unidades).toFixed(this.cifras));
+            suma = Number((suma + rescosto).toFixed(this.cifras));
             console.log('M.EXTERNO: ' + mte.nombre + ', Rescosto: ' + rescosto);
           }
         });
@@ -210,8 +207,10 @@ export class CostoPage implements OnInit {
       if (rctitem.idreceta === recetaId) {
         this.recetas.forEach( rct => {
           if (rctitem.idreceta === rct.id) { // Buscar recetas que coinciden con las del usuario
-            item.cantidad = item.cantidad * rctitem.cantidad;
-            suma = suma + this.costoReceta(iduser, item, rctitem.idsubreceta, 0); // Llamada recursiva para las subrecetas
+            const cloneitem = Object.assign({}, item); // clonar objetos antes de pasarlos a una función
+            cloneitem.cantidad = Number((item.cantidad * rctitem.cantidad).toFixed(this.cifras));
+            suma = Number((suma +
+              this.costoReceta(iduser, cloneitem, rctitem.idsubreceta, 0)).toFixed(this.cifras)); // Llamada recursiva para las subrecetas
           }
         });
       }
@@ -226,12 +225,13 @@ export class CostoPage implements OnInit {
 
     this.rctvalores.forEach( item => {
       this.recetas.forEach( rct => {
-        if (item.iditem === rct.id) {
+        if (item.iditem === rct.id) { // Usar las recetas que coincidan con los del input
           const cloneObject = Object.assign({}, item); // clonar objeto antes de pasarlo a la funcion
           const rescosto = this.costoReceta(iduser, cloneObject, item.iditem, 0);
           const obj = {
             nombre: rct.nombre,
-            costo: rescosto
+            valor: rescosto,
+            cantidad: item.cantidad
           };
           resp.push(obj);
         }
@@ -240,11 +240,12 @@ export class CostoPage implements OnInit {
 
     this.ingvalores.forEach( item => {
       this.ingredientes.forEach( ing => {
-        if (item.iditem === ing.id) {
-          const rescosto = Number(((ing.precio / ing.peso) * item.cantidad).toFixed(2));
+        if (item.iditem === ing.id) { // Usar los ingredientes que coincidan con los del input
+          const rescosto = Number(((ing.precio / ing.peso) * item.cantidad).toFixed(this.cifras));
           const obj = {
             nombre: ing.nombre,
-            costo: rescosto
+            valor: rescosto,
+            cantidad: item.cantidad
           };
           resp.push(obj);
         }
@@ -253,11 +254,12 @@ export class CostoPage implements OnInit {
 
     this.mtevalores.forEach( item => {
       this.materialesexternos.forEach( mte => {
-        if (item.iditem === mte.id) {
-          const rescosto = Number(((mte.precio / mte.unidades) * Math.ceil(item.cantidad)).toFixed(2));
+        if (item.iditem === mte.id) { // Usar los materiales externos que coincidan con los del input
+          const rescosto = Number(((mte.precio / mte.unidades) * Math.ceil(item.cantidad)).toFixed(this.cifras));
           const obj = {
             nombre: mte.nombre,
-            costo: rescosto
+            valor: rescosto,
+            cantidad: item.cantidad
           };
           resp.push(obj);
         }
@@ -266,10 +268,20 @@ export class CostoPage implements OnInit {
 
     let suma = 0;
     resp.forEach( item => {
-      console.log('Nombre: ' + item.nombre + ', Costo: ' + item.costo);
-      suma = suma + item.costo;
+      console.log('Nombre: ' + item.nombre + ', Costo: ' + item.valor);
+      suma = suma + item.valor;
+      item.valor = '₡ ' + (item.valor).toFixed(0);
     });
     console.log('TOTAL: ' + suma);
+    const total = {
+      nombre: 'TOTAL',
+      valor: '₡ ' + (suma).toFixed(0),
+      cantidad: ''
+    };
+    resp.push(total); // Guardar el costo total
+    return {
+      array: resp
+       };
   }
 
 /*  async mostrarPop( evento ) {
@@ -282,13 +294,14 @@ export class CostoPage implements OnInit {
 
     await popover.present();
   }*/
-
+  // Función que abre la ventana del modal. Le pasa al modal los datos a mostrar
   async abrirModal() {
+    const res = this.OnCalcularCostos();
     const modal = await this.modalCtrl.create({
       component: ModalInfoPage,
-      componentProps: {
-        nombre: 'Ricardo',
-        pais: 'Salvador'
+      componentProps: { // Pasar datos
+        obj: res,
+        titulomodal: 'Información Costos'
       }
     });
     await modal.present();

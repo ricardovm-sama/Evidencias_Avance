@@ -14,6 +14,16 @@ export class MainmenuPage implements OnInit {
       title: 'Costos',
       icon: 'cash',
       url: '/costo'
+    },
+    {
+      title: 'Valor Nutricional',
+      icon: 'clipboard',
+      url: '/vn'
+    },
+    {
+      title: 'Realicemos',
+      icon: 'restaurant',
+      url: '/realizar'
     }
   ];
 

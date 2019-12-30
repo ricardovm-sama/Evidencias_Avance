@@ -3,8 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/mainmenu"></ion-back-button>
     </ion-buttons>
-    <ion-button color="tertiary" slot="end" (click)="abrirModal()">Costos</ion-button>
-    <ion-title>Asignación</ion-title>
+    <ion-button color="tertiary" slot="end" (click)="onDecidirModal()">¿Es la orden posible?</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -15,6 +14,10 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
+              <ion-toolbar color="light">
+                <ion-button color="secondary" slot="start">Desechar Ord.</ion-button>
+                <ion-button color="secondary" slot="end">Agregar Ord.</ion-button>
+              </ion-toolbar>
                 <ion-item *ngFor="let receta of recetas; let i = index">
                   <ion-label class='fixedLabel'>{{ receta.nombre }}</ion-label>
                   <ion-input #inputentry ngModel (keyup.enter)="addValue(1, inputentry, receta.id)"
@@ -42,4 +45,3 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-

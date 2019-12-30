@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar color="primary">
-        <ion-button (click)="salir()" color="danger">Cerrar</ion-button>
-    <ion-title>Información Costos</ion-title>
+        <ion-button slot="end" (click)="salir()" color="danger">Cerrar</ion-button>
+    <ion-title>{{ titulomodal }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,8 +12,9 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
-                <ion-item>
-                  <ion-label>{{pais}}</ion-label>
+                <ion-item *ngFor="let elem of obj.array; let i = index">
+                  <ion-label class='fixedLabel'>{{elem.nombre}}</ion-label>
+                  <ion-label>{{elem.valor}}</ion-label>
                 </ion-item>  
             </ion-list>
           </ion-card-content>

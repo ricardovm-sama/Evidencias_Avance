@@ -31,6 +31,14 @@ const routes: Routes = [
         loadChildren: () => import('./pages/mod-me/mod-me-detail/mod-me-detail.module').then( m => m.ModMeDetailPageModule)
       }
     ]
+  },
+  {
+    path: 'vn',
+    loadChildren: () => import('./pages/vn/vn.module').then( m => m.VnPageModule)
+  },
+  {
+    path: 'realizar',
+    loadChildren: () => import('./pages/realizar/realizar.module').then( m => m.RealizarPageModule)
   }
 ];
 
