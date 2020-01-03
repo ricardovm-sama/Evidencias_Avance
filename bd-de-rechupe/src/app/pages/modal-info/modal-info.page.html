@@ -12,6 +12,9 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
+              <ion-toolbar id="zonaboton" style="display: none;" (click)="onconfirmarCambios()">
+                <ion-button color="secondary" slot="start">Realizar cambios</ion-button>
+              </ion-toolbar>
                 <ion-item *ngFor="let elem of obj.array; let i = index">
                   <ion-label class='fixedLabel'>{{elem.nombre}}</ion-label>
                   <ion-label>{{elem.valor}}</ion-label>

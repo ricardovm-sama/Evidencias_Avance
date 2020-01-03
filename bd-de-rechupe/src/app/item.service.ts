@@ -72,6 +72,22 @@ export class ItemService {
     return this.httpClient.get(`${this.AUTH_SERVER_ADDRESS}/api/receta_materialesexternos/${String(userId)}/${String(recetaId)}`);
   }
 
+  // Función que retorna todas las receta_materialexterno de 1 receta del usuario
+  getIngredientesTemporadas(userId: number): Observable<any> {
+    return this.httpClient.get(`${this.AUTH_SERVER_ADDRESS}/api/temporadas/${String(userId)}`);
+  }
+
+  // Función que envía un request para registrar un material externo para un usuario, en el servidor
+  crearMaterialExterno(me: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/materialexterno/crear`, me).pipe(
+      tap(async (res: any ) => {
+
+        if (res.data) {
+          console.log(res.data);
+        }
+      })
+    );
+  }
 
   // Función que envía un request para registrar un usuario, en el servidor
   modicarMaterialExterno(ME: MaterialExterno, nombre: string, marca: string,
@@ -105,6 +121,18 @@ export class ItemService {
           'Content-Type': 'application/json'
         })
       });*/
+  }
+
+  // Función que permite agregar o desechar los items de la funcionalidad realizar. Actualiza ingredientes y/o materiales externos
+  realizarAgregarDesechar(resp: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/realizar/`, resp).pipe(
+      tap(async (res: any ) => {
+
+        if (res.data.array) {
+           console.log('Array recibido: ', res.data.array);
+        }
+      })
+    );
   }
 
 }

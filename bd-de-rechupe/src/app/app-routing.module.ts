@@ -39,6 +39,14 @@ const routes: Routes = [
   {
     path: 'realizar',
     loadChildren: () => import('./pages/realizar/realizar.module').then( m => m.RealizarPageModule)
+  },
+  {
+    path: 'temporada',
+    loadChildren: () => import('./pages/temporada/temporada.module').then( m => m.TemporadaPageModule)
+  },
+  {
+    path: 'crear-me',
+    loadChildren: () => import('./pages/crear-me/crear-me.module').then( m => m.CrearMePageModule)
   }
 ];
 

@@ -1,0 +1,53 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mainmenu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Buscar por temporada</ion-title>
+  </ion-toolbar>
+  <ion-searchbar showCancelButton="never" (ionChange)="search( $event )"></ion-searchbar>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>Mes</ion-label>
+      <ion-select #multiselect id="multiselect" multiple="true" (ionChange)="obtenerMeses(multiselect)" placeholder="Selecciona el mes" okText="Ok" cancelText="Cerrar">
+     <!-- OPCIONAL   <ion-select-option #option name="ninguno" (click)="onTodos(multiselect, option)" checked="true">Todos</ion-select-option> -->
+        <ion-select-option value="Enero">Enero</ion-select-option>
+        <ion-select-option value="Febrero">Febrero</ion-select-option>
+        <ion-select-option value="Marzo">Marzo</ion-select-option>
+        <ion-select-option value="Abril">Abril</ion-select-option>
+        <ion-select-option value="Mayo">Mayo</ion-select-option>
+        <ion-select-option value="Junio">Junio</ion-select-option>
+        <ion-select-option value="Julio">Julio</ion-select-option>
+        <ion-select-option value="Agosto">Agosto</ion-select-option>
+        <ion-select-option value="Septiembre">Septiembre</ion-select-option>
+        <ion-select-option value="Octubre">Octubre</ion-select-option>
+        <ion-select-option value="Noviembre">Noviembre</ion-select-option>
+        <ion-select-option value="Diciembre">Diciembre</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <!-- ESTO ES OPCIONAL (FUERA DEL ALCANCE DEL PROYECTO) 
+              <ion-item *ngFor="let receta of recetas | filtrotemprct: textoBuscar: rctsings: temporadas: meses: 'nombre': 'id'">
+                <ion-label>{{ receta.nombre }}</ion-label>
+                <ion-icon name= "logo-buffer"> </ion-icon>
+              </ion-item>-->
+              <ion-item *ngFor="let ingrediente of ingredientes | filtrotemping: textoBuscar: temporadas: meses: 'nombre': 'peso_disp'">
+                <ion-label>{{ ingrediente.nombre }}</ion-label>
+                <ion-icon name= "nutrition"> </ion-icon>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

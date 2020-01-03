@@ -32,7 +32,7 @@
               <ion-item *ngFor="let materialexterno of materialesexternos; let i = index">
                 <ion-label class='fixedLabel'>{{ materialexterno.nombre }}</ion-label>
                 <ion-input #inputentry3 ngModel (keyup.enter)="addValue(3, inputentry3, materialexterno.id)"
-                (ionBlur)="addValue(3, inputentry3, materialexterno.id)" color="primary" placeholder="0.00" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>                
+                (ionBlur)="addValue(3, inputentry3, materialexterno.id)" color="primary" placeholder="0" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>                
                 <ion-icon name= "construct"> </ion-icon>
               </ion-item>
             </ion-list>

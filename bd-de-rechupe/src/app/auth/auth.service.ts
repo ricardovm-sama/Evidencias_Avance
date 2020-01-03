@@ -11,7 +11,7 @@ import { AuthResponse } from './authresponse.model';
   providedIn: 'root'
 })
 export class AuthService {
-  AUTH_SERVER_ADDRESS: string  =  'http://localhost:3000';
+  AUTH_SERVER_ADDRESS  =  'http://localhost:3000';
   authSubject: BehaviorSubject<boolean>  =  new  BehaviorSubject(false);
   private userId: number;
 
@@ -49,7 +49,6 @@ export class AuthService {
           this.userId = res.user.id;
           await this.storage.set('ACCESS_TOKEN', res.user.access_token);
           await this.storage.set('EXPIRES_IN', res.user.expires_in);
-          // await this.storage.set('userId', res.user.id);
           await this.storage.set('userId', res.user.id);
           this.authSubject.next(true);
         }
@@ -66,7 +65,6 @@ export class AuthService {
           this.userId = res.user.id;
           await this.storage.set('ACCESS_TOKEN', res.user.access_token);
           await this.storage.set('EXPIRES_IN', res.user.expires_in);
-          // await this.storage.set('userId', res.user.id);
           await this.storage.set('userId', res.user.id);
           this.authSubject.next(true);
         }
@@ -79,7 +77,6 @@ export class AuthService {
     this.userId = null;
     await this.storage.remove('ACCESS_TOKEN');
     await this.storage.remove('EXPIRES_IN');
-    // await this.storage.remove('userId');
     await this.storage.remove('userId');
     this.authSubject.next(false);
   }

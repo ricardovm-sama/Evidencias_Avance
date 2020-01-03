@@ -28,7 +28,7 @@ export class CostoPage implements OnInit {
   mtevalores: Cantidad[] = [];
   textoBuscar = '';
 
-  cifras = 3;
+  cifras = 0;
 
   constructor(
     private itemService: ItemService,
@@ -133,12 +133,27 @@ borrarElementosContenidos(id: number, tipo: number) {
   // Función que va guardando los inputs del usuario (en distintos arreglos dependiendo del tipo del ítem)
   addValue(tipo: number, entry: any, iditems: number) {
     const valor = entry.value;
-    const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
+    let pattern: any;
 
-    if ((valor === '' || valor === '0.00') || (valor !== '' && !patternPeso.test(valor))) {
+    switch (tipo) { // Se escoge la expresion regular del patrón
+      case 3: // Se usa patrón unidades
+          pattern = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))$');
+          break;
+      default: // Se usa patrón peso
+          pattern = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
+    }
+
+    if ((valor === '' || valor === '0.00') || (valor !== '' && !pattern.test(valor))) {
       this.borrarElementosContenidos(iditems, tipo);
-      entry.value = ''; // Restablecer el placeholder
-      entry.placeholder = '0.00';
+
+      switch (tipo) { // Cómo se inicializa el placeholder
+        case 3: // Si son materiales externos
+            entry.placeholder = '0'; // Restablecer el placeholder
+            break;
+        default: // Cualquier otro item
+            entry.placeholder = '0.00'; // Restablecer el placeholder
+      }
+      entry.value = ''; // Restablecer el valor
       return;
     }
 
@@ -183,7 +198,7 @@ borrarElementosContenidos(id: number, tipo: number) {
       if (rctitem.idreceta === recetaId) {
         this.ingredientes.forEach( ing => {
           if (rctitem.idingrediente === ing.id) { // Buscar ingredientes que coinciden con los del usuario
-            const rescosto = Number(((ing.precio / ing.peso) * item.cantidad * rctitem.peso).toFixed(this.cifras));
+            const rescosto = Number((Math.ceil(((ing.precio / ing.peso) * item.cantidad * rctitem.peso) / 5) * 5).toFixed(this.cifras));
             suma = Number((suma + rescosto).toFixed(this.cifras));
             console.log('Ingrediente: ' + ing.nombre + ', Rescosto: ' + rescosto);
           }
@@ -195,7 +210,8 @@ borrarElementosContenidos(id: number, tipo: number) {
       if (rctitem.idreceta === recetaId) {
         this.materialesexternos.forEach( mte => {
           if (rctitem.idmaterialexterno === mte.id) { // Buscar materiales externos que coinciden con los del usuario
-            const rescosto = Number(((mte.precio / mte.unidades) * Math.ceil(item.cantidad) * rctitem.unidades).toFixed(this.cifras));
+            const rescosto = Number((Math.ceil(((mte.precio / mte.unidades) *
+            item.cantidad * rctitem.unidades) / 5) * 5).toFixed(this.cifras));
             suma = Number((suma + rescosto).toFixed(this.cifras));
             console.log('M.EXTERNO: ' + mte.nombre + ', Rescosto: ' + rescosto);
           }
@@ -208,7 +224,7 @@ borrarElementosContenidos(id: number, tipo: number) {
         this.recetas.forEach( rct => {
           if (rctitem.idreceta === rct.id) { // Buscar recetas que coinciden con las del usuario
             const cloneitem = Object.assign({}, item); // clonar objetos antes de pasarlos a una función
-            cloneitem.cantidad = Number((item.cantidad * rctitem.cantidad).toFixed(this.cifras));
+            cloneitem.cantidad = Number((item.cantidad * rctitem.cantidad).toFixed(3));
             suma = Number((suma +
               this.costoReceta(iduser, cloneitem, rctitem.idsubreceta, 0)).toFixed(this.cifras)); // Llamada recursiva para las subrecetas
           }
@@ -241,7 +257,7 @@ borrarElementosContenidos(id: number, tipo: number) {
     this.ingvalores.forEach( item => {
       this.ingredientes.forEach( ing => {
         if (item.iditem === ing.id) { // Usar los ingredientes que coincidan con los del input
-          const rescosto = Number(((ing.precio / ing.peso) * item.cantidad).toFixed(this.cifras));
+          const rescosto = Number((Math.ceil(((ing.precio / ing.peso) * item.cantidad) / 5) * 5).toFixed(this.cifras));
           const obj = {
             nombre: ing.nombre,
             valor: rescosto,
@@ -255,7 +271,7 @@ borrarElementosContenidos(id: number, tipo: number) {
     this.mtevalores.forEach( item => {
       this.materialesexternos.forEach( mte => {
         if (item.iditem === mte.id) { // Usar los materiales externos que coincidan con los del input
-          const rescosto = Number(((mte.precio / mte.unidades) * Math.ceil(item.cantidad)).toFixed(this.cifras));
+          const rescosto = Number((Math.ceil(((mte.precio / mte.unidades) * item.cantidad) / 5) * 5).toFixed(this.cifras));
           const obj = {
             nombre: mte.nombre,
             valor: rescosto,
@@ -269,7 +285,7 @@ borrarElementosContenidos(id: number, tipo: number) {
     let suma = 0;
     resp.forEach( item => {
       console.log('Nombre: ' + item.nombre + ', Costo: ' + item.valor);
-      suma = suma + item.valor;
+      suma = suma + Number((item.valor).toFixed(0));
       item.valor = '₡ ' + (item.valor).toFixed(0);
     });
     console.log('TOTAL: ' + suma);
@@ -301,7 +317,8 @@ borrarElementosContenidos(id: number, tipo: number) {
       component: ModalInfoPage,
       componentProps: { // Pasar datos
         obj: res,
-        titulomodal: 'Información Costos'
+        titulomodal: 'Información Costos',
+        activarboton: false
       }
     });
     await modal.present();

@@ -274,7 +274,7 @@ borrarElementosContenidos(id: number, tipo: number) {
       this.recetas.forEach( rct => {
         if (item.iditem === rct.id) { // Usar las recetas que coincidan con las del input
           const cloneitem = Object.assign({}, item); // clonar objetos antes de pasarlos a una función
-          const nuevasuma = { 
+          const nuevasuma = {
             energia: 0,
             proteina: 0,
             grasa: 0,
@@ -331,8 +331,8 @@ borrarElementosContenidos(id: number, tipo: number) {
     sumaitems.grasa = Number((sumaitems.grasa).toFixed(2)) + ' g';
     sumaitems.carbohidratos = Number((sumaitems.carbohidratos).toFixed(2)) + ' g';
     sumaitems.fibra = Number((sumaitems.fibra).toFixed(2)) + ' g';
-    sumaitems.colesterol = Number((sumaitems.colesterol).toFixed(0)) + ' mg';
-    sumaitems.sodio = Number((sumaitems.sodio).toFixed(0)) + ' mg';
+    sumaitems.colesterol = Number((sumaitems.colesterol).toFixed(2)) + ' mg';
+    sumaitems.sodio = Number((sumaitems.sodio).toFixed(2)) + ' mg';
     } else {
       sumaitems.energia = 0 + ' Kcal.';
       sumaitems.proteina = 0 + ' g';
@@ -361,7 +361,8 @@ borrarElementosContenidos(id: number, tipo: number) {
       component: ModalInfoPage,
       componentProps: { // Pasar datos
         obj: res,
-        titulomodal: 'Valor Nutricional Total'
+        titulomodal: 'Valor Nutricional Total',
+        activarboton: false
       }
     });
     await modal.present();

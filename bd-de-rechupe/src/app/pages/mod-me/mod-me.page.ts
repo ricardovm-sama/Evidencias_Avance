@@ -15,7 +15,7 @@ export class ModMePage implements OnInit {
 
   constructor(
     private materialexternoService: ItemService,
-    private  authService: AuthService,
+    private  authService: AuthService
     ) { }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class ModMePage implements OnInit {
   }
 
   // Función que carga la lista de materiales externos
-  ionViewWillEnter() {
+  ionViewDidEnter() {
       const iduser = this.authService.getUserId();
       if (iduser) {
       console.log('UserID: ' + iduser);

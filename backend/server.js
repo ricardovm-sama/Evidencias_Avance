@@ -139,8 +139,10 @@ const  createReceta_MaterialExternoTable  = () => {
 const  createTemporadaTable  = () => {
     const  sqlQuery  =  `
         CREATE TABLE IF NOT EXISTS temporada (
-        idingrediente NOT NULL,
-        temporada text NOT NULL,
+        idingrediente integer NOT NULL,
+        iduser integer NOT NULL,
+        temp text NOT NULL,
+        FOREIGN KEY(iduser) REFERENCES user(id),
         FOREIGN KEY(idingrediente) REFERENCES ingrediente(id)
         )`;
 
@@ -228,15 +230,18 @@ const insertReceta_MaterialExterno = () => {
 
 //Temporadas
 const insertTemporadas = () => {
-    db.run(`INSERT INTO temporada (idingrediente,temporada) 
+    db.run(`INSERT INTO temporada (iduser,idingrediente,temp) 
     VALUES 
-       (3,'Enero'),
-       (3,'Febrero'),
-       (4,'Febrero'),
-       (4,'Marzo'),
-       (5,'Diciembre'),
-       (6,'Noviembre'),
-       (6,'Febrero');`);
+       (1,3,'Enero'),
+       (1,3,'Febrero'),
+       (1,4,'Febrero'),
+       (1,4,'Marzo'),
+       (1,5,'Diciembre'),
+       (1,5,'Marzo'),
+       (1,6,'Enero'),
+       (1,6,'Noviembre'),
+       (1,6,'Junio'),
+       (1,6,'Febrero');`);
     }
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -259,6 +264,7 @@ createTemporadaTable();
 // insertReceta_Receta();
 // insertReceta_Ingrediente();
 // insertReceta_MaterialExterno();
+// insertTemporadas();
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
 // ################################################################################################################################
@@ -449,6 +455,33 @@ router.delete("/api/user/:id", (req, res, next) => { // Borrar Usuario
 // --------------------------------------------------------------------------------------------------------------------------------
 //MATERIALES EXTERNOS
 // --------------------------------------------------------------------------------------------------------------------------------
+// Ruta que permite crear materiales externos
+router.post("/api/materialexterno/crear", (req, res, next) => {
+    const data = {
+        iduser: req.body.id,
+        nombre: req.body.form.nombre,
+        precio: req.body.form.precio,
+        unidades_disp: req.body.form.unidades_disp,
+        unidades: req.body.form.unidades,
+        marca: req.body.form.marca
+    } 
+    console.log('user: ', data.iduser);
+    console.log('nombre: ', data.nombre);
+    db.run(
+        `INSERT INTO materialexterno (nombre, precio, unidades_disp, unidades, marca, iduser) VALUES (?,?,?,?,?,?)`, 
+        [data.nombre, data.precio, data.unidades_disp, data.unidades, data.marca, data.iduser],
+        (err, result) => {
+            if (err){
+                res.status(400).json({"error":err.message});
+                return;
+            }
+            res.json({
+                "message": "success",
+                "data": data
+            })
+    });        
+}) 
+
 router.get("/api/materialesexternos/:id", (req, res, next) => {
     var sql = "select * from materialexterno where iduser = ? ORDER BY nombre ASC, unidades ASC"
     var params = [req.params.id]
@@ -478,7 +511,7 @@ router.get("/api/materialexterno/:id", (req, res, next) => {
         })
       });
 });
-
+// Ruta que permite modificar todos los datos de un material externo
 router.get("/api/materialexterno/mod/:id/:nombre/:precio/:unidades_disp/:unidades/:marca", (req, res, next) => {
 const data = {
         nombre: req.params.nombre,
@@ -508,7 +541,6 @@ const data = {
     });
 
 })
-
 // --------------------------------------------------------------------------------------------------------------------------------
 //INGREDIENTES
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -584,6 +616,29 @@ const data = {
     });
 
 });
+
+// Ruta que permite "realizar" (agregar o desechar) ingredientes
+router.get("/api/ingrediente/realizar/:id/:peso_disp", (req, res, next) => {
+    const data = {
+            peso_disp: req.params.peso_disp
+        } 
+        db.run(
+            `UPDATE ingrediente set 
+               peso_disp = ?
+               WHERE id = ?`,
+            [data.peso_disp, req.params.id],
+            (err, result) => {
+                if (err){
+                    res.status(400).json({"error":err.message});
+                    return;
+                }
+                res.json({
+                    "message": "success",
+                    "data": data
+                })
+        });
+    
+    })
 
 // --------------------------------------------------------------------------------------------------------------------------------
 //RECETAS
@@ -761,7 +816,65 @@ router.get("/api/receta_materialexterno/:id/:idreceta/:idmaterialexterno", (req,
         })
       });
 });
-
+// --------------------------------------------------------------------------------------------------------------------------------
+//INGREDIENTE_TEMPORADA
+// --------------------------------------------------------------------------------------------------------------------------------
+// Ruta para obtener las temporadas de todos los ingredientes del usuario
+router.get("/api/temporadas/:id", (req, res, next) => {
+    var sql = "select * from temporada where iduser = ? ORDER BY temp ASC, idingrediente ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+// --------------------------------------------------------------------------------------------------------------------------------
+//FUNCIÓN REALIZAR. AGREGAR Y DESECHAR INGREDIENTES Y/O MATERIALES EXTERNOS
+// --------------------------------------------------------------------------------------------------------------------------------
+// Ruta que permite agregar o desechar los items de la funcionalidad realizar.
+router.post("/api/realizar/", (req, res, next) => {
+        const data = {
+            array: req.body
+        }
+        data.array.forEach(elem => {
+            if (elem.tipo === 2) {
+                db.run(
+                    `UPDATE ingrediente set 
+                       peso_disp = ? 
+                       WHERE id = ?`,
+                    [elem.valor, elem.iditem],
+                    (err, result) => {
+                        if (err){
+                            res.status(400).json({"error":err.message});
+                            return;
+                        }
+                });
+            }
+            if (elem.tipo === 3) {
+                db.run(
+                    `UPDATE materialexterno set 
+                       unidades_disp = ? 
+                       WHERE id = ?`,
+                    [elem.valor, elem.iditem],
+                    (err, result) => {
+                        if (err){
+                            res.status(400).json({"error":err.message});
+                            return;
+                        }
+                });
+            } 
+        });
+        res.json({
+                 "message": "success",
+                 "data": data
+        })        
+}) 
 // ################################################################################################################################
 // --------------------------------------------------------------------------------------------------------------------------------
 // ################################################################################################################################

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterEvent } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { MenuController, AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-mainmenu',
@@ -24,12 +25,38 @@ export class MainmenuPage implements OnInit {
       title: 'Realicemos',
       icon: 'restaurant',
       url: '/realizar'
+    },
+    {
+      title: 'De Temporada',
+      icon: 'flag',
+      url: '/temporada'
+    },
+    {
+      title: 'Materiales Externos',
+      open: false,
+      children: [
+        {
+          title: 'Crear',
+          icon: 'color-wand',
+          url: '/crear-me'
+        },
+        {
+          title: 'Modificar',
+          icon: 'thumbs-up',
+          url: '/mod-me'
+        }
+      ]
     }
   ];
 
  // selectedPath = '';
 
-  constructor( private menuCtrl: MenuController ) {}
+  constructor(
+    private menuCtrl: MenuController,
+    private alertCtrl: AlertController,
+    private  authService: AuthService,
+    private router: Router
+     ) {}
 
  /* constructor(private router: Router) {
     this.router.events.subscribe((event: RouterEvent) => {
@@ -41,7 +68,27 @@ export class MainmenuPage implements OnInit {
   }
 
   toggleMenu() {
+    this.menuCtrl.enable(true);
     this.menuCtrl.toggle();
+  }
+
+  onCerrarSesion() {
+    this.alertCtrl.create({
+      header: '¿Estás seguro?',
+      message: '¿Deseas cerrar sesión?',
+      buttons: [{
+        text: 'Cancelar',
+        role: 'cancel'
+      }, {
+        text: 'Cerrar Sesión',
+        handler: () => {
+          this.authService.cerrarSesion();
+          this.router.navigate(['/ingreso']);
+        }
+      }]
+    }).then(alertElem => {
+      alertElem.present();
+    });
   }
 
 }

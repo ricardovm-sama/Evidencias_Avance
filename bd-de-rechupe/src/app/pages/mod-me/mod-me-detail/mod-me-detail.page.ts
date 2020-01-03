@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ItemService } from '../../../item.service';
 import { MaterialExterno } from '../../../materialexterno.model';
 import { ToastController, AlertController } from '@ionic/angular';
-import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-mod-me-detail',
@@ -29,18 +28,17 @@ export class ModMeDetailPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private materialexternoService: ItemService,
+    private itemService: ItemService,
     public toastController: ToastController,
-    private  authService: AuthService,
     private router: Router,
     private alertCtrl: AlertController
     ) { }
 
-// Función que carga la lista de materiales externos
   ngOnInit() {
 
   }
 
+  // Función que carga la lista de materiales externos
   ionViewWillEnter() {
     console.log('DETALLES DEL MATERIAL');
     let materialexternoId = '';
@@ -51,7 +49,7 @@ export class ModMeDetailPage implements OnInit {
       materialexternoId = paramMap.get('materialexternoId'); // Asignar el objeto correspondiente del id del url
     });
 
-    this.materialexternoService.getMaterialExterno(Number(materialexternoId)).subscribe((res) => {
+    this.itemService.getMaterialExterno(Number(materialexternoId)).subscribe((res) => {
       if (res) {
       this.loadedMaterialExterno = res.data;
       }
@@ -110,7 +108,7 @@ export class ModMeDetailPage implements OnInit {
         text: 'Modificar',
         handler: () => {
           const cloneObject = Object.assign({}, this.loadedMaterialExterno);
-          this.materialexternoService.modicarMaterialExterno(cloneObject, this.inputmodmenombre,
+          this.itemService.modicarMaterialExterno(cloneObject, this.inputmodmenombre,
           this.inputmodmemarca, this.inputmodmeprecio, this.inputmodmeunidadesdisp, this.inputmodmeunidades).subscribe((res) => {
             if (res.data.nombre) { // Si existe
               this.loadedMaterialExterno.nombre = res.data.nombre;

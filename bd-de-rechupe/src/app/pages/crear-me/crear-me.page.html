@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mainmenu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Material Externo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="OnCrearMaterialExterno(form)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" ion-align-self-center>
+          <ion-card>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input placeholder="Nombre" type="text" ngModel required name="nombre" pattern="^(?![\s.0-9]+$)[a-zA-Z\s.0-9].{1,31}$" minlength="1" maxlength="31"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Marca</ion-label>
+                <ion-input placeholder="Marca" type="text" ngModel required name="marca" pattern="^(?![\s]+$)[a-zA-Z\s.0-9$!%?&].{1,31}$" minlength="1" maxlength="31"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Precio de referencia (₡)</ion-label>
+                <ion-input placeholder="0" type="text" ngModel required name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>           
+              <ion-item>
+                <ion-label position="floating">Unidades de referencia</ion-label>
+                <ion-input placeholder="0" type="text" ngModel required name="unidades" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Unidades disponibles</ion-label>
+                <ion-input placeholder="0" type="text" ngModel required name="unidades_disp" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>
+     <!--         <div ion-margin-vertical ion-text-right>
+                <ion-button (click)="OnCrearMaterialExterno()">Crear Material Externo</ion-button>
+              </div>-->
+              <div class="ion-padding">
+                <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Crear Material Externo</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
