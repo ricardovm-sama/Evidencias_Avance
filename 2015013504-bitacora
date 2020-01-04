@@ -22,3 +22,17 @@ Se realizó:
 11.	Funcionalidad Ingreso
 12.	Funcionalidad Buscar
 13.	Funcionalidades de Mantenimiento de Materiales Externos, específicamente: Modificar Materiales Externos.
+
+Fecha: 29/12/2019
+Se implementó:
+1.	Funcionalidad Cálculo de valores nutricionales desde la interfaz 
+2.	Funcionalidad Cálculo de costos desde la interfaz   
+3.	Funcionalidad Confirmar si la preparación de un platillo es posible desde la interfaz
+
+Fecha: 3/1/2020
+Se realizó:
+1.	Iteración 2 – Casos de Pruebas
+2.	Iteración 2 – ERS
+3.	Funcionalidad “Confirmar si los ingredientes de un platillo se pueden conseguir en cierto mes desde la interfaz”
+4.	Funcionalidades de Mantenimiento de Materiales Externos (específicamente crear)
+
