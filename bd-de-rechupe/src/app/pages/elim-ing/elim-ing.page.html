@@ -1,0 +1,28 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mainmenu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Elegir Ingrediente</ion-title>
+  </ion-toolbar>
+  <ion-searchbar showCancelButton="never" (ionChange)="search( $event )"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let ingrediente of ingredientes | filtro: textoBuscar: 'nombre': 'peso_disp'" [routerLink]="['./', ingrediente.id]">
+                <ion-label>{{ ingrediente.nombre }}</ion-label>
+                <ion-icon name= "nutrition"> </ion-icon>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

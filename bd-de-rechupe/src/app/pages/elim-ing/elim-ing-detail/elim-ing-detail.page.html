@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/elim-ing"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ loadedIngrediente.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="floating">Nombre</ion-label>
+              <ion-input value="{{loadedIngrediente.nombre}}" readonly="true"></ion-input>             
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Precio de referencia (₡)</ion-label>
+              <ion-input value="{{loadedIngrediente.precio}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Peso de referencia (g)</ion-label>
+              <ion-input value="{{loadedIngrediente.peso}}" readonly="true"></ion-input>
+            </ion-item>           
+            <ion-item>
+              <ion-label position="floating">Peso disponible (g)</ion-label>
+              <ion-input value="{{loadedIngrediente.peso_disp}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Energía (Kcal)</ion-label>
+              <ion-input value="{{loadedIngrediente.energia}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Proteína (g)</ion-label>
+              <ion-input value="{{loadedIngrediente.proteina}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Grasa (g)</ion-label>
+              <ion-input value="{{loadedIngrediente.grasa}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Carbohidratos (g)</ion-label>
+              <ion-input value="{{loadedIngrediente.carbohidratos}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Fibra (g)</ion-label>
+              <ion-input value="{{loadedIngrediente.fibra}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Colesterol (mg)</ion-label>
+              <ion-input value="{{loadedIngrediente.colesterol}}" readonly="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Sodio (mg)</ion-label>
+              <ion-input value="{{loadedIngrediente.sodio}}" readonly="true"></ion-input>
+            </ion-item>
+            <div ion-margin-vertical ion-text-right>
+              <ion-button (click)="OnEliminarIngrediente()">Eliminar Ingrediente</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

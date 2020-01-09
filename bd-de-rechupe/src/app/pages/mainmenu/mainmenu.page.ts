@@ -32,6 +32,48 @@ export class MainmenuPage implements OnInit {
       url: '/temporada'
     },
     {
+      title: 'Recetas',
+      open: false,
+      children: [
+        {
+          title: 'Crear',
+          icon: 'color-wand',
+          url: '/crear-rct'
+        },
+        {
+          title: 'Modificar',
+          icon: 'thumbs-up',
+          url: '/mod-rct'
+        },
+        {
+          title: 'Eliminar',
+          icon: 'thumbs-down',
+          url: '/elim-rct'
+        }
+      ]
+    },
+    {
+      title: 'Ingredientes',
+      open: false,
+      children: [
+        {
+          title: 'Crear',
+          icon: 'color-wand',
+          url: '/crear-ing'
+        },
+        {
+          title: 'Modificar',
+          icon: 'thumbs-up',
+          url: '/mod-ing'
+        },
+        {
+          title: 'Eliminar',
+          icon: 'thumbs-down',
+          url: '/elim-ing'
+        }
+      ]
+    },
+    {
       title: 'Materiales Externos',
       open: false,
       children: [
@@ -44,6 +86,11 @@ export class MainmenuPage implements OnInit {
           title: 'Modificar',
           icon: 'thumbs-up',
           url: '/mod-me'
+        },
+        {
+          title: 'Eliminar',
+          icon: 'thumbs-down',
+          url: '/elim-me'
         }
       ]
     }

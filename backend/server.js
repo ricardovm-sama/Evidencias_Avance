@@ -45,7 +45,7 @@ const  createMaterialExternoTable  = () => {
         unidades integer NOT NULL,
         unidades_disp integer NOT NULL,
         marca text,
-        FOREIGN KEY(iduser) REFERENCES user(id)
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -61,14 +61,14 @@ const  createIngredienteTable  = () => {
         precio integer NOT NULL,
         peso real NOT NULL,
         peso_disp real NOT NULL,
-        energia integer,
+        energia real,
         proteina real,
         grasa real,
         carbohidratos real,
         fibra real,
-        colesterol integer,
-        sodio integer,
-        FOREIGN KEY(iduser) REFERENCES user(id)
+        colesterol real,
+        sodio real,
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -81,7 +81,7 @@ const  createRecetaTable  = () => {
         id integer PRIMARY KEY AUTOINCREMENT,
         iduser integer NOT NULL,
         nombre text NOT NULL,
-        FOREIGN KEY(iduser) REFERENCES user(id)
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -95,9 +95,9 @@ const  createReceta_RecetaTable  = () => {
         idsubreceta integer NOT NULL,
         iduser integer NOT NULL,
         cantidad real NOT NULL,
-        FOREIGN KEY(iduser) REFERENCES user(id),
-        FOREIGN KEY(idreceta) REFERENCES receta(id),
-        FOREIGN KEY(idsubreceta) REFERENCES receta(id)
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE,
+        FOREIGN KEY(idreceta) REFERENCES receta(id) ON DELETE CASCADE,
+        FOREIGN KEY(idsubreceta) REFERENCES receta(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -111,9 +111,9 @@ const  createReceta_IngredienteTable  = () => {
         idingrediente integer NOT NULL,
         iduser integer NOT NULL,
         peso real NOT NULL,
-        FOREIGN KEY(iduser) REFERENCES user(id),
-        FOREIGN KEY(idreceta) REFERENCES receta(id),
-        FOREIGN KEY(idingrediente) REFERENCES ingrediente(id)
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE,
+        FOREIGN KEY(idreceta) REFERENCES receta(id) ON DELETE CASCADE,
+        FOREIGN KEY(idingrediente) REFERENCES ingrediente(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -127,9 +127,9 @@ const  createReceta_MaterialExternoTable  = () => {
         idmaterialexterno integer NOT NULL,
         iduser integer NOT NULL,
         unidades integer NOT NULL,
-        FOREIGN KEY(iduser) REFERENCES user(id),
-        FOREIGN KEY(idreceta) REFERENCES receta(id),
-        FOREIGN KEY(idmaterialexterno) REFERENCES materialexterno(id)
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE,
+        FOREIGN KEY(idreceta) REFERENCES receta(id) ON DELETE CASCADE,
+        FOREIGN KEY(idmaterialexterno) REFERENCES materialexterno(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -142,8 +142,8 @@ const  createTemporadaTable  = () => {
         idingrediente integer NOT NULL,
         iduser integer NOT NULL,
         temp text NOT NULL,
-        FOREIGN KEY(iduser) REFERENCES user(id),
-        FOREIGN KEY(idingrediente) REFERENCES ingrediente(id)
+        FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE,
+        FOREIGN KEY(idingrediente) REFERENCES ingrediente(id) ON DELETE CASCADE
         )`;
 
     return  db.run(sqlQuery);
@@ -465,8 +465,6 @@ router.post("/api/materialexterno/crear", (req, res, next) => {
         unidades: req.body.form.unidades,
         marca: req.body.form.marca
     } 
-    console.log('user: ', data.iduser);
-    console.log('nombre: ', data.nombre);
     db.run(
         `INSERT INTO materialexterno (nombre, precio, unidades_disp, unidades, marca, iduser) VALUES (?,?,?,?,?,?)`, 
         [data.nombre, data.precio, data.unidades_disp, data.unidades, data.marca, data.iduser],
@@ -481,6 +479,21 @@ router.post("/api/materialexterno/crear", (req, res, next) => {
             })
     });        
 }) 
+// Ruta para eliminar un material externo. Recibe el id del ítem a eliminar.
+router.get("/api/materialexterno/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM materialexterno WHERE id = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data": params[0]
+        })
+      });
+});
 
 router.get("/api/materialesexternos/:id", (req, res, next) => {
     var sql = "select * from materialexterno where iduser = ? ORDER BY nombre ASC, unidades ASC"
@@ -544,6 +557,62 @@ const data = {
 // --------------------------------------------------------------------------------------------------------------------------------
 //INGREDIENTES
 // --------------------------------------------------------------------------------------------------------------------------------
+// Ruta que permite crear ingredientes
+router.post("/api/ingrediente/crear", (req, res, next) => {
+    const data = {
+        iduser: req.body.id,
+        nombre: req.body.form.nombre,
+        precio: req.body.form.precio,
+        peso_disp: req.body.form.peso_disp,
+        peso: req.body.form.peso,
+        energia: req.body.form.energia,
+        proteina: req.body.form.proteina,
+        grasa: req.body.form.grasa,
+        carbohidratos: req.body.form.carbohidratos,
+        fibra: req.body.form.fibra,
+        colesterol: req.body.form.colesterol,
+        sodio: req.body.form.sodio
+    } 
+    db.run(
+        `INSERT INTO ingrediente (iduser, nombre, precio, peso_disp, peso, energia, proteina, grasa, carbohidratos, fibra, colesterol, sodio) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`, 
+        [data.iduser, data.nombre, data.precio, data.peso_disp, data.peso, data.energia, data.proteina, data.grasa, data.carbohidratos,
+            data.fibra, data.colesterol, data.sodio],
+        (err, result) => {
+            if (err){
+                res.status(400).json({"error":err.message});
+                return;
+            }
+    });
+    var sql = "SELECT last_insert_rowid()"
+    var params = []
+    db.get(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":result
+        })
+    });   
+}) 
+
+// Ruta para eliminar un ingrediente. Recibe el id del ítem a eliminar.
+router.get("/api/ingrediente/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM ingrediente WHERE id = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data": params[0]
+        })
+      });
+});
+
 router.get("/api/ingredientes/:id", (req, res, next) => {
     var sql = "select * from ingrediente where iduser = ? ORDER BY nombre ASC, peso ASC"
     var params = [req.params.id]
@@ -573,20 +642,21 @@ router.get("/api/ingrediente/:id", (req, res, next) => {
         })
       });
 });
-
-router.get("/api/ingrediente/mod/:id/:nombre/:precio/:peso_disp/:peso/:energia/:proteina/:grasa/:carbohidratos/:fibra/:colesterol/:sodio", (req, res, next) => {
+// Ruta para modificar un ingrediente.
+router.post("/api/ingrediente/mod/", (req, res, next) => {
 const data = {
-        nombre: req.params.nombre,
-        precio: req.params.precio,
-        peso_disp: req.params.peso_disp,
-        peso: req.params.peso,
-        energia: req.params.energia,
-        proteina: req.params.proteina,
-        grasa: req.params.grasa,
-        carbohidratos: req.params.carbohidratos,
-        fibra: req.params.fibra,
-        colesterol: req.params.colesterol,
-        sodio: req.params.sodio
+        idingrediente: req.body.id,
+        nombre: req.body.nombre,
+        precio: req.body.precio,
+        peso_disp: req.body.peso_disp,
+        peso: req.body.peso,
+        energia: req.body.energia,
+        proteina: req.body.proteina,
+        grasa: req.body.grasa,
+        carbohidratos: req.body.carbohidratos,
+        fibra: req.body.fibra,
+        colesterol: req.body.colesterol,
+        sodio: req.body.sodio
     } 
     db.run(
         `UPDATE ingrediente set
@@ -603,7 +673,7 @@ const data = {
            sodio = ?
            WHERE id = ?`,
         [data.nombre, data.precio, data.peso_disp, data.peso, data.energia, data.proteina, data.grasa, data.carbohidratos,
-            data.fibra, data.colesterol, data.sodio, req.params.id],
+            data.fibra, data.colesterol, data.sodio, data.idingrediente],
         (err, result) => {
             if (err){
                 res.status(400).json({"error":err.message});
@@ -616,30 +686,6 @@ const data = {
     });
 
 });
-
-// Ruta que permite "realizar" (agregar o desechar) ingredientes
-router.get("/api/ingrediente/realizar/:id/:peso_disp", (req, res, next) => {
-    const data = {
-            peso_disp: req.params.peso_disp
-        } 
-        db.run(
-            `UPDATE ingrediente set 
-               peso_disp = ?
-               WHERE id = ?`,
-            [data.peso_disp, req.params.id],
-            (err, result) => {
-                if (err){
-                    res.status(400).json({"error":err.message});
-                    return;
-                }
-                res.json({
-                    "message": "success",
-                    "data": data
-                })
-        });
-    
-    })
-
 // --------------------------------------------------------------------------------------------------------------------------------
 //RECETAS
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -834,6 +880,71 @@ router.get("/api/temporadas/:id", (req, res, next) => {
         })
       });
 });
+
+// Ruta para obtener las temporadas de 1 ingrediente del usuario
+router.get("/api/temporadas/ingrediente/:id", (req, res, next) => {
+    var sql = "select * from temporada where idingrediente = ? ORDER BY temp ASC, idingrediente ASC"
+    var params = [req.params.id]
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":rows
+        })
+      });
+});
+
+// Ruta que permite insertar/crear las temporadas de un ingrediente
+router.post("/api/temporadas/crear", (req, res, next) => {
+    const data = {
+        array: req.body.array,
+   //     idingrediente: req.body.idingrediente['last_insert_rowid()'],
+        idingrediente: req.body.idingrediente,
+        iduser: req.body.id
+    }
+    data.array.forEach(elem => {
+        if (elem.selected === true) { // Insertar sólo si se seleccionó el mes
+            console.log('Se intenta insertar el mes: ', elem.nombre, 'idingrediente: ', data.idingrediente, 'iduser: ', data.iduser);
+            db.run(
+                `INSERT INTO temporada (idingrediente, iduser, temp) VALUES (?,?,?)`,
+               [data.idingrediente, data.iduser, elem.nombre],
+               (err, result) => {
+                  if (err){
+                     console.log('FRACASO al insertar el mes: ', elem.nombre);
+                     res.status(400).json({"error":err.message});
+                     return;
+                 }
+            });
+            console.log('Se insertó el mes: ', elem.nombre);
+        }
+    });
+    console.log('EXITO');
+    res.json({
+             "message": "success",
+             "data": data
+    })                
+}) 
+
+// Ruta que permite eliminar las temporadas de un ingrediente
+router.get("/api/temporadas/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM temporada WHERE idingrediente = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          console.log('FRACASO en proceso de eliminado');
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        console.log('Proceso de eliminado exitoso!');
+        res.json({
+            "message":"success",
+            "data": req.params.id
+        })
+      });
+}) 
 // --------------------------------------------------------------------------------------------------------------------------------
 //FUNCIÓN REALIZAR. AGREGAR Y DESECHAR INGREDIENTES Y/O MATERIALES EXTERNOS
 // --------------------------------------------------------------------------------------------------------------------------------

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MaterialexternoPage } from './materialexterno.page';
+import { ModRctPage } from './mod-rct.page';
 
-describe('MaterialexternoPage', () => {
-  let component: MaterialexternoPage;
-  let fixture: ComponentFixture<MaterialexternoPage>;
+describe('ModRctPage', () => {
+  let component: ModRctPage;
+  let fixture: ComponentFixture<ModRctPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MaterialexternoPage ],
+      declarations: [ ModRctPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MaterialexternoPage);
+    fixture = TestBed.createComponent(ModRctPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

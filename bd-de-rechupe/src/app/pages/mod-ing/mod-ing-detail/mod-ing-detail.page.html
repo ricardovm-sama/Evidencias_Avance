@@ -1,0 +1,71 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mainmenu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ loadedIngrediente.nombre }}</ion-title>
+    <ion-button color="tertiary" slot="end" (click)="onSeleccionarmeses()">Selecciona los meses</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="OnModicarIngrediente(form)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" ion-align-self-center>
+          <ion-card>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.nombre }}" type="text" ngModel name="nombre" pattern="^(?![\s.0-9]+$)[a-zA-Z\s.0-9].{1,31}$" minlength="1" maxlength="31"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Precio de referencia (₡)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.precio }}" type="text" ngModel name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Peso de referencia (g)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.peso }}" type="text" ngModel name="peso" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>           
+              <ion-item>
+                <ion-label position="floating">Peso disponible (g)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.peso_disp }}" type="text" ngModel name="peso_disp" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Energía (Kcal)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.energia }}" type="text" ngModel name="energia" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Proteína (g)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.proteina }}" type="text" ngModel name="proteina" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Grasa (g)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.grasa }}" type="text" ngModel name="grasa" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Carbohidratos (g)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.carbohidratos }}" type="text" ngModel name="carbohidratos" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Fibra (g)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.fibra }}" type="text" ngModel name="fibra" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Colesterol (mg)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.colesterol }}" type="text" ngModel name="colesterol" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Sodio (mg)</ion-label>
+                <ion-input placeholder="{{ loadedIngrediente.sodio }}" type="text" ngModel name="sodio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$" minlength="4" maxlength="13"></ion-input>
+              </ion-item>
+              <div class="ion-padding">
+                <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Modificar Ingrediente</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

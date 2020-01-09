@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TemporadaPageRoutingModule } from './temporada-routing.module';
+import { CrearIngPageRoutingModule } from './crear-ing-routing.module';
 
-import { TemporadaPage } from './temporada.page';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { CrearIngPage } from './crear-ing.page';
 import { ModalCheckPage } from '../modal-check/modal-check.page';
 import { ModalCheckPageModule } from '../modal-check/modal-check.module';
 
@@ -19,10 +18,9 @@ import { ModalCheckPageModule } from '../modal-check/modal-check.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    TemporadaPageRoutingModule,
-    PipesModule,
+    CrearIngPageRoutingModule,
     ModalCheckPageModule
   ],
-  declarations: [TemporadaPage]
+  declarations: [CrearIngPage]
 })
-export class TemporadaPageModule {}
+export class CrearIngPageModule {}

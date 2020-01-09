@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MaterialexternoPageRoutingModule } from './materialexterno-routing.module';
+import { ModRctDetailPageRoutingModule } from './mod-rct-detail-routing.module';
 
-import { MaterialexternoPage } from './materialexterno.page';
+import { ModRctDetailPage } from './mod-rct-detail.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MaterialexternoPageRoutingModule
+    ModRctDetailPageRoutingModule
   ],
-  declarations: [MaterialexternoPage]
+  declarations: [ModRctDetailPage]
 })
-export class MaterialexternoPageModule {}
+export class ModRctDetailPageModule {}

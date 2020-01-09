@@ -33,6 +33,58 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'elim-me',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/elim-me/elim-me.module').then( m => m.ElimMePageModule)
+      },
+      {
+        path: ':materialexternoId',
+        loadChildren: () => import('./pages/elim-me/elim-me-detail/elim-me-detail.module').then( m => m.ElimMeDetailPageModule)
+      }
+    ]
+  },
+  {
+    path: 'mod-ing',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/mod-ing/mod-ing.module').then( m => m.ModIngPageModule)
+      },
+      {
+        path: ':ingredienteId',
+        loadChildren: () => import('./pages/mod-ing/mod-ing-detail/mod-ing-detail.module').then( m => m.ModIngDetailPageModule)
+      }
+    ]
+  },
+  {
+    path: 'elim-ing',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/elim-ing/elim-ing.module').then( m => m.ElimIngPageModule)
+      },
+      {
+        path: ':ingredienteId',
+        loadChildren: () => import('./pages/elim-ing/elim-ing-detail/elim-ing-detail.module').then( m => m.ElimIngDetailPageModule)
+      }
+    ]
+  },
+  {
+    path: 'mod-rct',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/mod-rct/mod-rct.module').then( m => m.ModRctPageModule)
+      },
+      {
+        path: ':recetaId',
+        loadChildren: () => import('./pages/mod-rct/mod-rct-detail/mod-rct-detail.module').then( m => m.ModRctDetailPageModule)
+      }
+    ]
+  },
+  {
     path: 'vn',
     loadChildren: () => import('./pages/vn/vn.module').then( m => m.VnPageModule)
   },
@@ -47,6 +99,10 @@ const routes: Routes = [
   {
     path: 'crear-me',
     loadChildren: () => import('./pages/crear-me/crear-me.module').then( m => m.CrearMePageModule)
+  },
+  {
+    path: 'crear-ing',
+    loadChildren: () => import('./pages/crear-ing/crear-ing.module').then( m => m.CrearIngPageModule)
   }
 ];
 

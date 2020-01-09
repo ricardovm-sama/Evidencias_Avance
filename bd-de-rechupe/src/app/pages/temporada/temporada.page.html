@@ -9,21 +9,7 @@
   <ion-toolbar>
     <ion-item>
       <ion-label>Mes</ion-label>
-      <ion-select #multiselect id="multiselect" multiple="true" (ionChange)="obtenerMeses(multiselect)" placeholder="Selecciona el mes" okText="Ok" cancelText="Cerrar">
-     <!-- OPCIONAL   <ion-select-option #option name="ninguno" (click)="onTodos(multiselect, option)" checked="true">Todos</ion-select-option> -->
-        <ion-select-option value="Enero">Enero</ion-select-option>
-        <ion-select-option value="Febrero">Febrero</ion-select-option>
-        <ion-select-option value="Marzo">Marzo</ion-select-option>
-        <ion-select-option value="Abril">Abril</ion-select-option>
-        <ion-select-option value="Mayo">Mayo</ion-select-option>
-        <ion-select-option value="Junio">Junio</ion-select-option>
-        <ion-select-option value="Julio">Julio</ion-select-option>
-        <ion-select-option value="Agosto">Agosto</ion-select-option>
-        <ion-select-option value="Septiembre">Septiembre</ion-select-option>
-        <ion-select-option value="Octubre">Octubre</ion-select-option>
-        <ion-select-option value="Noviembre">Noviembre</ion-select-option>
-        <ion-select-option value="Diciembre">Diciembre</ion-select-option>
-      </ion-select>
+      <ion-button color="tertiary" slot="end" (click)="onSeleccionarmeses()">Selecciona los meses</ion-button>
     </ion-item>
   </ion-toolbar>
 </ion-header>

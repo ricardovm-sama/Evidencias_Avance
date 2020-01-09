@@ -76,7 +76,7 @@ export class CostoPage implements OnInit {
 // Función que obtiene un ítem usando su id de ítem (en distintos arreglos dependiendo del tipo del ítem)
 getObjetoById(id: number, tipo: number) {
   switch (tipo) {
-    case 1:// Si son recetas, ingredientes o materiales externos
+    case 1: // Si son recetas, ingredientes o materiales externos
       return this.rctvalores.filter( item => {
         if (item) {
           return item.iditem === id;
@@ -107,7 +107,7 @@ borrarElementosContenidos(id: number, tipo: number) {
   if (typeof(valores) !== 'undefined' && valores.length > 0) { // La entrada del input ya se había guardado.
     console.log('Se remueve la entrada del arreglo');
     switch (tipo) {
-    case 1:// Si son recetas, ingredientes o materiales externos
+    case 1: // Si son recetas, ingredientes o materiales externos
       this.rctvalores = this.rctvalores.filter( item => { // Se remueve el elemento del array
         return valores.indexOf( item ) < 0;
     });

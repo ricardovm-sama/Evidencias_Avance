@@ -1,0 +1,31 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+        <ion-button slot="end" (click)="salir()" color="danger">Cerrar</ion-button>
+    <ion-title>{{ titulomodal }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-toolbar id="zonaboton" style="display: none;">
+                <ion-button color="secondary" slot="start" (click)="onconfirmarCambios()">{{ botonmodal }} </ion-button>
+                <ion-button color="secondary" slot="end" (click)="onTodos()">Todos</ion-button>
+              </ion-toolbar>
+                <ion-item *ngFor="let check of this.clonearray; let i = index">
+                  <ion-label class='fixedLabel'>{{check.nombre}}</ion-label>
+                  <ion-checkbox slot="end" mode="ios" [(ngModel)]="check.selected"
+                                color="secondary">
+                  </ion-checkbox>
+                </ion-item>  
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

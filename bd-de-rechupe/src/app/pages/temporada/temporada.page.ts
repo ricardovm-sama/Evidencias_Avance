@@ -3,6 +3,8 @@ import { Ingrediente } from 'src/app/ingrediente.model';
 import { ItemService } from 'src/app/item.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Receta } from 'src/app/receta.model';
+import { ModalCheckPage } from '../modal-check/modal-check.page';
+import { ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -16,14 +18,64 @@ export class TemporadaPage implements OnInit {
 
   rctsings: any[] = [];
   temporadas: any[] = [];
-  meses: any[] = [];
+  meses = [
+    {
+      nombre: 'Enero',
+      selected: false
+    },
+    {
+      nombre: 'Febrero',
+      selected: false
+    },
+    {
+      nombre: 'Marzo',
+      selected: false
+    },
+    {
+      nombre: 'Abril',
+      selected: false
+    },
+    {
+      nombre: 'Mayo',
+      selected: false
+    },
+    {
+      nombre: 'Junio',
+      selected: false
+    },
+    {
+      nombre: 'Julio',
+      selected: false
+    },
+    {
+      nombre: 'Agosto',
+      selected: false
+    },
+    {
+      nombre: 'Septiembre',
+      selected: false
+    },
+    {
+      nombre: 'Octubre',
+      selected: false
+    },
+    {
+      nombre: 'Noviembre',
+      selected: false
+    },
+    {
+      nombre: 'Diciembre',
+      selected: false
+    }
+  ];
 
   textoBuscar = '';
   all = false;
 
   constructor(
     private itemService: ItemService,
-    private  authService: AuthService
+    private  authService: AuthService,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -50,43 +102,30 @@ export class TemporadaPage implements OnInit {
     this.itemService.getIngredientesTemporadas(iduser).subscribe((res) => { // Obtener ingredientes_temporadas
     this.temporadas = res.data;
     });
-//    this.meses.push('Febrero');
-//    this.meses.push('Marzo');
-/*    console.log('Recetas', this.recetas);
-    console.log('Ingredientes', this.ingredientes);
-    console.log('Recetas_Ingredientes', this.rctsings);
-    console.log('Temporadas', this.temporadas); */
-    console.log('MESES', this.meses);
     }
   }
   // Función que obtiene el texto introducido en la barra de búsqueda
   search( event ) {
     this.textoBuscar = event.detail.value;
   }
-  // Función que actualiza el arreglo meses con los meses seleccionados.
-  obtenerMeses(multiselect: any) {
-    this.meses = multiselect.value;
-  }
-  // Función que selecciona/deselecciona todos los meses OPCIONAL
-  onTodos(multiselect: any, option: any) {
-/*    if (option.name === 'ninguno') {
-      console.log('hola');
-      this.all = true;
-      option.name = 'todos';
-    }*/
-    if (option.value === 'ninguno') {
-      console.log('hola');
-      this.all = true;
-      option.value = 'todos';
-      return true;
-    }
-    if (option.value === 'todos') {
-      console.log('wei');
-      this.all = false;
-      option.value = 'ninguno';
-      return false;
-    }
 
+  // Función que llama el modal para seleccionar los meses
+  async onSeleccionarmeses() {
+    const modal = await this.modalCtrl.create({
+      component: ModalCheckPage,
+      componentProps: { // Pasar datos
+        array: this.meses,
+        titulomodal: 'Seleccionar los meses:',
+        botonmodal: 'Elegir meses',
+        mensajealert: '¿Deseas elegir estos meses?',
+        confirmalert: 'Aceptar',
+        activarboton: true
+      }
+      });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    this.meses = data.respuesta;
+    console.log('MESES NUEVO:', this.meses);
   }
 
 
