@@ -88,6 +88,11 @@ export class ItemService {
 // --------------------------------------------------------------------------------------------------------------------------------
 // MÉTODOS PARA CREAR ÍTEMS
 // --------------------------------------------------------------------------------------------------------------------------------
+  // Función que envía un request para crear una receta, en el servidor
+  crearReceta(userId: number, nom: string): Observable<any> {
+    return this.httpClient.get(`${this.AUTH_SERVER_ADDRESS}/api/receta/crear/${String(userId)}/${String(nom)}`);
+  }
+
   // Función que envía un request para crear un ingrediente, en el servidor
   crearIngrediente(ing: any): Observable<any> {
     return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/ingrediente/crear`, ing).pipe(
@@ -99,7 +104,7 @@ export class ItemService {
     );
   }
 
-    // Función que envía un request para crear un ingrediente, en el servidor
+    // Función que envía un request para insertar temporadas, en el servidor
   insertarTemporadasIngrediente(obj: any): Observable<any> {
     return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/temporadas/crear`, obj).pipe(
       tap(async (res: any ) => {
@@ -121,9 +126,47 @@ export class ItemService {
     );
   }
 
+  // Función que envía un request para insertar receta_recetas, en el servidor
+  insertarRecetaRecetas(obj: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta_receta/crear`, obj).pipe(
+      tap(async (res: any ) => {
+        if (res.data) {
+          console.log('RecetaRecetas insertadas: ', res.data);
+        }
+      })
+    );
+  }
+
+    // Función que envía un request para insertar receta_ingredientes, en el servidor
+  insertarRecetaIngredientes(obj: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta_ingrediente/crear`, obj).pipe(
+      tap(async (res: any ) => {
+        if (res.data) {
+          console.log('RecetaIngredientes insertadas: ', res.data);
+        }
+      })
+    );
+  }
+
+  // Función que envía un request para insertar receta_materialesexternos, en el servidor
+  insertarRecetaMaterialesExternos(obj: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta_materialexterno/crear`, obj).pipe(
+      tap(async (res: any ) => {
+        if (res.data) {
+          console.log('RecetaMaterialesExternos insertadas: ', res.data);
+        }
+      })
+    );
+  }
+
 // --------------------------------------------------------------------------------------------------------------------------------
 // MÉTODOS PARA MODIFICAR ÍTEMS
 // --------------------------------------------------------------------------------------------------------------------------------
+  // Función que envía un request para modificar el nombre de una receta, en el servidor
+  modificarReceta(recetaId: number, nom: string): Observable<any> {
+    return this.httpClient.get(`${this.AUTH_SERVER_ADDRESS}/api/receta/mod/${String(recetaId)}/${String(nom)}`);
+  }
+
   // Función que envía un request para modificar un ingrediente, en el servidor
   modicarIngrediente(ING: Ingrediente, form): Observable<any> {
       if (form.nombre !== '') { // Asignar los valores que se quieren cambiar
@@ -217,6 +260,11 @@ export class ItemService {
 // --------------------------------------------------------------------------------------------------------------------------------
 // MÉTODOS PARA ELIMINAR ÍTEMS
 // --------------------------------------------------------------------------------------------------------------------------------
+  // Función que envía un request para eliminar una receta, en el servidor
+  eliminarReceta(rctId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta/elim/${String(rctId)}`);
+  }
+
   // Función que envía un request para eliminar un ingrediente, en el servidor
   eliminarIngrediente(ingId: number): Observable<any> {
     return this.httpClient.get<any>(`${this.AUTH_SERVER_ADDRESS}/api/ingrediente/elim/${String(ingId)}`);
@@ -230,6 +278,21 @@ export class ItemService {
     // Función que envía un request para eliminar un material externo, en el servidor
   eliminarMaterialExterno(mteId: number): Observable<any> {
     return this.httpClient.get<any>(`${this.AUTH_SERVER_ADDRESS}/api/materialexterno/elim/${String(mteId)}`);
+  }
+
+  // Función que elimina todas las receta_receta de 1 receta
+  eliminarRecetaRecetas(rctId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta_receta/elim/${String(rctId)}`);
+  }
+
+  // Función que elimina todas las receta_ingrediente de 1 receta
+  eliminarRecetaIngredientes(rctId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta_ingrediente/elim/${String(rctId)}`);
+  }
+
+  // Función que elimina todas las receta_materialexterno de 1 receta
+  eliminarRecetaMaterialesExternos(rctId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.AUTH_SERVER_ADDRESS}/api/receta_materialexterno/elim/${String(rctId)}`);
   }
 
 // --------------------------------------------------------------------------------------------------------------------------------

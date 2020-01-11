@@ -85,6 +85,19 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'elim-rct',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/elim-rct/elim-rct.module').then( m => m.ElimRctPageModule)
+      },
+      {
+        path: ':recetaId',
+        loadChildren: () => import('./pages/elim-rct/elim-rct-detail/elim-rct-detail.module').then( m => m.ElimRctDetailPageModule)
+      }
+    ]
+  },
+  {
     path: 'vn',
     loadChildren: () => import('./pages/vn/vn.module').then( m => m.VnPageModule)
   },
@@ -103,6 +116,10 @@ const routes: Routes = [
   {
     path: 'crear-ing',
     loadChildren: () => import('./pages/crear-ing/crear-ing.module').then( m => m.CrearIngPageModule)
+  },
+  {
+    path: 'crear-rct',
+    loadChildren: () => import('./pages/crear-rct/crear-rct.module').then( m => m.CrearRctPageModule)
   }
 ];
 

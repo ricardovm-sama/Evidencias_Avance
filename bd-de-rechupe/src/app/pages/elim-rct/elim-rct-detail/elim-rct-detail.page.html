@@ -1,0 +1,60 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/elim-rct"></ion-back-button>
+    </ion-buttons>
+    <ion-button color="tertiary" slot="end" (click)="OnEliminarReceta()">Eliminar Receta</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label position="floating" style="font-size:20px;">Nombre Receta</ion-label>
+                <ion-input value="{{ clonerctnombre }}" readonly="true"></ion-input>  
+              </ion-item>
+
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px;">
+                  Subrecetas
+                </ion-label>
+              </ion-item-divider>
+                <ion-item *ngFor="let entrada1 of clonerctrcts; let i = index">
+                  <ion-label class='fixedLabel'>{{ entrada1.nombre }}</ion-label>
+                  <ion-input value="{{ entrada1.cantidad }}" readonly="true"></ion-input>  
+                  <ion-icon name="logo-buffer"></ion-icon>               
+                </ion-item>  
+
+                <ion-item-divider color="secondary" sticky="true">
+                  <ion-label style="font-size:20px">
+                    Ingredientes
+                  </ion-label>
+                </ion-item-divider>             
+              <ion-item *ngFor="let entrada2 of clonerctings; let i = index">
+                <ion-label class='fixedLabel'>{{ entrada2.nombre }}</ion-label>
+                <ion-input value="{{ entrada2.peso }}" readonly="true"></ion-input>  
+                <ion-icon name="nutrition"></ion-icon>
+              </ion-item> 
+
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px">
+                  Materiales Externos
+                </ion-label>
+              </ion-item-divider> 
+              <ion-item *ngFor="let entrada3 of clonerctmtes; let i = index">
+                <ion-label class='fixedLabel'>{{ entrada3.nombre }}</ion-label>
+                <ion-input value="{{ entrada3.unidades }}" readonly="true"></ion-input>                 
+                <ion-icon name= "construct"> </ion-icon>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,9 +1,76 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>mod-rct-detail</ion-title>
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mod-rct"></ion-back-button>
+    </ion-buttons>
+    <ion-button color="tertiary" slot="end" (click)="OnModicarReceta()">Modificar Receta</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" ion-align-self-center>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label position="floating" style="font-size:20px;">Nombre Receta</ion-label>
+                <ion-input #inputnombre ngModel (keyup.enter)="addNombre(inputnombre)"
+                (ionBlur)="addNombre(inputnombre)" color="primary" placeholder="{{ clonerctnombre }}" type="text" pattern="^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>  
+              </ion-item>
 
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px;">
+                  Subrecetas
+                </ion-label>
+              </ion-item-divider>
+              <ion-toolbar id="zona1_tool" style="display: inline;">
+                <ion-button color="secondary" slot="start" (click)="onEliminarSubrecetas()">Eliminar</ion-button>
+                <ion-button color="secondary" slot="end" (click)="onAgregarSubrecetas()">Agregar</ion-button>
+              </ion-toolbar>
+                <ion-item *ngFor="let entrada1 of clonerctrcts; let i = index">
+                  <ion-label class='fixedLabel'>{{ entrada1.nombre }}</ion-label>
+                  <ion-input #inputentry ngModel (keyup.enter)="addValue(1, inputentry, entrada1)"
+                  (ionBlur)="addValue(1, inputentry, entrada1)" color="primary" placeholder="{{ entrada1.cantidad }}" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>  
+                  <ion-icon name="logo-buffer"></ion-icon>               
+                </ion-item>  
+
+                <ion-item-divider color="secondary" sticky="true">
+                  <ion-label style="font-size:20px">
+                    Ingredientes
+                  </ion-label>
+                </ion-item-divider>  
+                <ion-toolbar id="zona2_tool" style="display: inline;">
+                  <ion-button color="secondary" slot="start" (click)="onEliminarIngredientes()">Eliminar</ion-button>
+                  <ion-button color="secondary" slot="end" (click)="onAgregarIngredientes()">Agregar</ion-button>
+                </ion-toolbar>            
+              <ion-item *ngFor="let entrada2 of clonerctings; let i = index">
+                <ion-label class='fixedLabel'>{{ entrada2.nombre }}</ion-label>
+                <ion-input #inputentry2 ngModel (keyup.enter)="addValue(2, inputentry2, entrada2)"
+                (ionBlur)="addValue(2, inputentry2, entrada2)" color="primary" placeholder="{{ entrada2.peso }}" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>  
+                <ion-icon name="nutrition"></ion-icon>
+              </ion-item> 
+
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px">
+                  Materiales Externos
+                </ion-label>
+              </ion-item-divider> 
+              <ion-toolbar id="zona3_tool" style="display: inline;">
+                <ion-button color="secondary" slot="start" (click)="onEliminarMaterialesExternos()">Eliminar</ion-button>
+                <ion-button color="secondary" slot="end" (click)="onAgregarMaterialesExternos()">Agregar</ion-button>
+              </ion-toolbar>
+              <ion-item *ngFor="let entrada3 of clonerctmtes; let i = index">
+                <ion-label class='fixedLabel'>{{ entrada3.nombre }}</ion-label>
+                <ion-input #inputentry3 ngModel (keyup.enter)="addValue(3, inputentry3, entrada3)"
+                (ionBlur)="addValue(3, inputentry3, entrada3)" color="primary" placeholder="{{ entrada3.unidades }}" type="text" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>                 
+                <ion-icon name= "construct"> </ion-icon>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -106,9 +106,9 @@ borrarElementosContenidos(id: number, tipo: number) {
   // Función que va guardando los inputs del usuario (en distintos arreglos dependiendo del tipo del ítem)
   addValue(tipo: number, entry: any, iditems: number) {
     const valor = entry.value;
-    const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
+    const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$');
 
-    if ((valor === '' || valor === '0.00') || (valor !== '' && !patternPeso.test(valor))) {
+    if ((valor === '' || Number(valor) === 0) || (valor !== '' && !patternPeso.test(valor))) {
       this.borrarElementosContenidos(iditems, tipo);
       entry.value = ''; // Restablecer el placeholder
       entry.placeholder = '0.00';

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ModRctPageRoutingModule } from './mod-rct-routing.module';
+import { ElimRctPageRoutingModule } from './elim-rct-routing.module';
 
-import { ModRctPage } from './mod-rct.page';
+import { ElimRctPage } from './elim-rct.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ModRctPageRoutingModule,
+    ElimRctPageRoutingModule,
     PipesModule
   ],
-  declarations: [ModRctPage]
+  declarations: [ElimRctPage]
 })
-export class ModRctPageModule {}
+export class ElimRctPageModule {}

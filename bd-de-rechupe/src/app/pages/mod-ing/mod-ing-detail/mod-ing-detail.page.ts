@@ -231,7 +231,6 @@ export class ModIngDetailPage implements OnInit {
       this.meses = data.respuesta;
       console.log('MESES NUEVO:', this.meses);
     }
-/*    idingrediente integer NOT NULL,
-    iduser integer NOT NULL,
-    temp text NOT NULL,*/
+
+
 }

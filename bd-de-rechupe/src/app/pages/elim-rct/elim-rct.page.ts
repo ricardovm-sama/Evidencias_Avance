@@ -5,11 +5,11 @@ import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
-  selector: 'app-mod-rct',
-  templateUrl: './mod-rct.page.html',
-  styleUrls: ['./mod-rct.page.scss'],
+  selector: 'app-elim-rct',
+  templateUrl: './elim-rct.page.html',
+  styleUrls: ['./elim-rct.page.scss'],
 })
-export class ModRctPage implements OnInit {
+export class ElimRctPage implements OnInit {
   recetas: Receta[];
   textoBuscar = '';
 
@@ -40,6 +40,5 @@ export class ModRctPage implements OnInit {
   search( event ) {
     this.textoBuscar = event.detail.value;
   }
-
 
 }

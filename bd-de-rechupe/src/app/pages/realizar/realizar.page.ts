@@ -144,10 +144,10 @@ borrarElementosContenidos(id: number, tipo: number) {
           pattern = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))$');
           break;
       default: // Se usa patrón peso
-          pattern = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
+          pattern = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$');
     }
 
-    if ((valor === '' || valor === '0.00') || (valor !== '' && !pattern.test(valor))) {
+    if ((valor === '' || Number(valor) === 0) || (valor !== '' && !pattern.test(valor))) {
       this.borrarElementosContenidos(iditems, tipo);
 
       switch (tipo) { // Cómo se inicializa el placeholder

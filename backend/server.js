@@ -170,7 +170,8 @@ const insertMaterialesExternos = () => {
        (2,'Papel',800,1,6,'Soft'),
        (2,'Cuerda',200,3,8,"Aladino"),
        (1,'El Plato Fantástico',450,6,20,'Patito'),
-       (1,'Servilleta',600,7,15,'Ventnor');`);
+       (1,'Servilleta',600,7,15,'Ventnor'),
+       (1,'Lazo',300,4,5,'Lazlo');`);
     }
 
 //Ingredientes
@@ -222,10 +223,9 @@ const insertReceta_Ingrediente = () => {
 const insertReceta_MaterialExterno = () => {
     db.run(`INSERT INTO receta_materialexterno (iduser,idreceta,idmaterialexterno,unidades) 
     VALUES 
-       (1,3,1,1),
        (1,4,3,1),
        (1,5,4,2),
-       (1,7,1,1);`);
+       (1,7,5,1);`);
     }
 
 //Temporadas
@@ -719,6 +719,59 @@ router.get("/api/receta/:id", (req, res, next) => {
       });
 });
 
+// Ruta para crear una receta.
+router.get("/api/receta/crear/:id/:nom", (req, res, next) => {
+    var params = [req.params.id, req.params.nom]
+    db.run(
+        `INSERT INTO receta (iduser, nombre) VALUES (?,?)`,
+        params,
+        (err, result) => {
+            if (err){
+                res.status(400).json({"error":err.message});
+                return;
+            }
+            res.json({
+                "message": "success",
+                "data": req.params.nom
+            })
+    });
+});
+
+// Ruta para modificar el nombre de una receta.
+router.get("/api/receta/mod/:id/:nom", (req, res, next) => {
+    var params = [req.params.nom, req.params.id]
+    db.run(
+        `UPDATE receta set
+           nombre = ? 
+           WHERE id = ?`,
+        params,
+        (err, result) => {
+            if (err){
+                res.status(400).json({"error":err.message});
+                return;
+            }
+            res.json({
+                "message": "success",
+                "data": req.params.nom
+            })
+    });
+});
+
+// Ruta para eliminar una receta. Recibe el id del ítem a eliminar.
+router.get("/api/receta/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM receta WHERE id = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data": params[0]
+        })
+      });
+});
 // --------------------------------------------------------------------------------------------------------------------------------
 //RECETA_RECETA
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -763,6 +816,48 @@ router.get("/api/receta_receta/:id/:idreceta/:idsubreceta", (req, res, next) => 
         res.json({
             "message":"success",
             "data":row
+        })
+      });
+});
+
+// Ruta que permite insertar/crear las entradas para una receta
+router.post("/api/receta_receta/crear", (req, res, next) => {
+    const data = {
+        array: req.body.arrayrct
+    }
+    data.array.forEach(elem => {
+            console.log('Se intenta insertar la subreceta: ', elem.nombre, 'cantidad: ', elem.cantidad);
+            db.run(
+                `INSERT INTO receta_receta (idreceta, idsubreceta, iduser, cantidad) VALUES (?,?,?,?)`,
+               [elem.idreceta, elem.idsubreceta, elem.iduser, elem.cantidad],
+               (err, result) => {
+                  if (err){
+                     console.log('FRACASO al insertar la subreceta: ', elem.nombre);
+                     res.status(400).json({"error":err.message});
+                     return;
+                 }
+            });
+            console.log('Se insertó la subreceta: ', elem.nombre);
+    });
+    console.log('EXITO');
+    res.json({
+             "message": "success",
+             "data": data
+    })                
+}) 
+
+// Ruta para eliminar las entradas con recetaid. Recibe el id del ítem a eliminar.
+router.get("/api/receta_receta/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM receta_receta WHERE idreceta = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data": params[0]
         })
       });
 });
@@ -815,6 +910,48 @@ router.get("/api/receta_ingrediente/:id/:idreceta/:idingrediente", (req, res, ne
       });
 });
 
+// Ruta que permite insertar/crear las entradas para una receta
+router.post("/api/receta_ingrediente/crear", (req, res, next) => {
+    const data = {
+        array: req.body.arraying
+    }
+    data.array.forEach(elem => {
+            console.log('Se intenta insertar el ingrediente: ', elem.nombre, 'peso: ', elem.peso);
+            db.run(
+                `INSERT INTO receta_ingrediente (idreceta, idingrediente, iduser, peso) VALUES (?,?,?,?)`,
+               [elem.idreceta, elem.idingrediente, elem.iduser, elem.peso],
+               (err, result) => {
+                  if (err){
+                     console.log('FRACASO al insertar el ingrediente: ', elem.nombre);
+                     res.status(400).json({"error":err.message});
+                     return;
+                 }
+            });
+            console.log('Se insertó el ingrediente: ', elem.nombre);
+    });
+    console.log('EXITO');
+    res.json({
+             "message": "success",
+             "data": data
+    })                
+}) 
+
+// Ruta para eliminar las entradas con recetaid. Recibe el id del ítem a eliminar.
+router.get("/api/receta_ingrediente/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM receta_ingrediente WHERE idreceta = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data": params[0]
+        })
+      });
+});
+
 // --------------------------------------------------------------------------------------------------------------------------------
 //RECETA_MATERIAL EXTERNO
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -859,6 +996,48 @@ router.get("/api/receta_materialexterno/:id/:idreceta/:idmaterialexterno", (req,
         res.json({
             "message":"success",
             "data":row
+        })
+      });
+});
+
+// Ruta que permite insertar/crear las entradas para una receta
+router.post("/api/receta_materialexterno/crear", (req, res, next) => {
+    const data = {
+        array: req.body.arraymte
+    }
+    data.array.forEach(elem => {
+            console.log('Se intenta insertar el materialexterno: ', elem.nombre, 'unidades: ', elem.unidades);
+            db.run(
+                `INSERT INTO receta_materialexterno (idreceta, idmaterialexterno, iduser, unidades) VALUES (?,?,?,?)`,
+               [elem.idreceta, elem.idmaterialexterno, elem.iduser, elem.unidades],
+               (err, result) => {
+                  if (err){
+                     console.log('FRACASO al insertar el materialexterno: ', elem.nombre);
+                     res.status(400).json({"error":err.message});
+                     return;
+                 }
+            });
+            console.log('Se insertó el materialexterno: ', elem.nombre);
+    });
+    console.log('EXITO');
+    res.json({
+             "message": "success",
+             "data": data
+    })                
+}) 
+
+// Ruta para eliminar las entradas con recetaid. Recibe el id del ítem a eliminar.
+router.get("/api/receta_materialexterno/elim/:id", (req, res, next) => {
+    var sql = "DELETE FROM receta_materialexterno WHERE idreceta = ?"
+    var params = [req.params.id]
+    db.run(sql, params, (err, result) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data": params[0]
         })
       });
 });

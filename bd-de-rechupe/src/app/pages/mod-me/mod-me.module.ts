@@ -9,7 +9,6 @@ import { ModMePageRoutingModule } from './mod-me-routing.module';
 import { ModMePage } from './mod-me.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
-
 @NgModule({
   imports: [
     CommonModule,

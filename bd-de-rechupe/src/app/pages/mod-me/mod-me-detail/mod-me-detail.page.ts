@@ -67,10 +67,9 @@ export class ModMeDetailPage implements OnInit {
 
   // Función que modifica un material externo y luego redirecciona a la página anterior
   OnModicarMaterialExterno() {
-    const patternNombre = new RegExp('^(?![\s.0-9]+$)[a-zA-Z\s.0-9].{1,31}$');
-    const patternMarca = new RegExp('^(?![\s]+$)[a-zA-Z\s.0-9$!%?&].{1,31}$');
+    const patternNombre = new RegExp('^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$');
+    const patternMarca = new RegExp('^(?![ ]+$)[a-zA-Z .0-9$!%?&]{1,}$');
     const patternUnidades = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))$');
-    // const patternPeso = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))[.]{1}[0-9]{2}$');
 
     if (this.inputmodmenombre === '' && this.inputmodmemarca === '' && this.inputmodmeprecio === '' &&
      this.inputmodmeunidadesdisp === '' && this.inputmodmeunidades === '') {

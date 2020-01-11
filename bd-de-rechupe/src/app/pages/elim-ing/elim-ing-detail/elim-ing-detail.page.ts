@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ItemService } from '../../../item.service';
 import { Ingrediente } from 'src/app/ingrediente.model';
-import { ToastController, AlertController} from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ItemService } from 'src/app/item.service';
+import { ToastController, AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-elim-ing-detail',

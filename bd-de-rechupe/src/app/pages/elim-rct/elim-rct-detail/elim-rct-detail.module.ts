@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { ElimIngDetailPageRoutingModule } from './elim-ing-detail-routing.module';
-import { ElimIngDetailPage } from './elim-ing-detail.page';
 
+import { ElimRctDetailPageRoutingModule } from './elim-rct-detail-routing.module';
+
+import { ElimRctDetailPage } from './elim-rct-detail.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ElimIngDetailPageRoutingModule
+    ElimRctDetailPageRoutingModule
   ],
-  declarations: [ElimIngDetailPage]
+  declarations: [ElimRctDetailPage]
 })
-export class ElimIngDetailPageModule {}
+export class ElimRctDetailPageModule {}
