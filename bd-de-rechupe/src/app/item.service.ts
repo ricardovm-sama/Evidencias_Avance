@@ -224,22 +224,21 @@ export class ItemService {
   }
 
   // Función que envía un request para modificar un material externo, en el servidor
-  modicarMaterialExterno(ME: MaterialExterno, nombre: string, marca: string,
-                         precio: string, unidadesdisp: string, unidades: string): Observable<any> {
-      if (nombre !== '') { // Asignar los valores que se quieren cambiar
-        ME.nombre = nombre;
+  modicarMaterialExterno(ME: MaterialExterno, form): Observable<any> {
+      if (form.nombre !== '') { // Asignar los valores que se quieren cambiar
+        ME.nombre = form.nombre;
       }
-      if (marca !== '') {
-        ME.marca = marca;
+      if (form.marca !== '') {
+        ME.marca = form.marca;
      }
-      if (precio !== '') {
-        ME.precio = Number(precio);
+      if (form.precio !== '') {
+        ME.precio = Number(form.precio);
      }
-      if (unidadesdisp !== '') {
-        ME.unidades_disp = Number(unidadesdisp);
+      if (form.unidades_disp !== '') {
+        ME.unidades_disp = Number(form.unidades_disp);
      }
-      if (unidades !== '') {
-        ME.unidades = Number(unidades);
+      if (form.unidades !== '') {
+        ME.unidades = Number(form.unidades);
      }
       console.log('L2_NOMBRE: ' + ME.nombre);
       console.log('L2_MARCA: ' + ME.marca);
@@ -249,12 +248,6 @@ export class ItemService {
 
       return this.httpClient.get(`${this.AUTH_SERVER_ADDRESS}/api/materialexterno/mod/${String(ME.id)}/${String(ME.nombre)}/
       ${String(ME.precio)}/${String(ME.unidades_disp)}/${String(ME.unidades)}/${String(ME.marca)}`);
-
-            /*return this.httpClient.put<void>(`${this.AUTH_SERVER_ADDRESS}/api/materialexterno/mod/${ME.id}`, ME, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      });*/
   }
 
 // --------------------------------------------------------------------------------------------------------------------------------

@@ -17,12 +17,12 @@
               <ion-item>
                 <ion-label position="floating" style="font-size:20px;">Nombre Receta</ion-label>
                 <ion-input #inputnombre ngModel (keyup.enter)="addNombre(inputnombre)"
-                (ionBlur)="addNombre(inputnombre)" color="primary" placeholder="{{ clonerctnombre }}" type="text" pattern="^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>  
+                (ionBlur)="addNombre(inputnombre)" color="primary" placeholder="{{ clonerctnombre }}" type="text" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>  
               </ion-item>
 
               <ion-item-divider color="secondary" sticky="true">
                 <ion-label style="font-size:20px;">
-                  Subrecetas
+                  Subrecetas (porción)
                 </ion-label>
               </ion-item-divider>
               <ion-toolbar id="zona1_tool" style="display: inline;">
@@ -38,7 +38,7 @@
 
                 <ion-item-divider color="secondary" sticky="true">
                   <ion-label style="font-size:20px">
-                    Ingredientes
+                    Ingredientes (g)
                   </ion-label>
                 </ion-item-divider>  
                 <ion-toolbar id="zona2_tool" style="display: inline;">
@@ -54,7 +54,7 @@
 
               <ion-item-divider color="secondary" sticky="true">
                 <ion-label style="font-size:20px">
-                  Materiales Externos
+                  Materiales Externos (uds.)
                 </ion-label>
               </ion-item-divider> 
               <ion-toolbar id="zona3_tool" style="display: inline;">

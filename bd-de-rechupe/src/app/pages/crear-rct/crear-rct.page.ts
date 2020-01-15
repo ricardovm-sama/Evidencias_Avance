@@ -33,7 +33,7 @@ export class CrearRctPage implements OnInit {
     // Función que va guardando los inputs del usuario (en distintos arreglos dependiendo del tipo del ítem)
     addNombre(entry: any) {
       const valor = entry.value;
-      const pattern = new RegExp('^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$');
+      const pattern = new RegExp('^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$');
 
       if ((valor === '') || (valor !== '' && !pattern.test(valor))) {
         console.log('Entrada original: ', this.rctnombre);

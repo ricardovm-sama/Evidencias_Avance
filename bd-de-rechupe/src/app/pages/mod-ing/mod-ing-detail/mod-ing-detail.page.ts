@@ -197,7 +197,7 @@ export class ModIngDetailPage implements OnInit {
                     this.itemService.insertarTemporadasIngrediente(obj2).subscribe((elem) => {
                       if (elem.data) { // Si existe
                         this.onToast('Operación exitosa!', 2000); // Desplegar mensaje de éxito
-                        this.router.navigate(['/mainmenu']); // Redireccionar a la página anterior
+                        this.router.navigate(['/mod-ing']); // Redireccionar a la página anterior
                       }
                     });
                   }

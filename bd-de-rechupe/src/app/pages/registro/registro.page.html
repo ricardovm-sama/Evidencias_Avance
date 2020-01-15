@@ -16,16 +16,18 @@
             <ion-card>
               <ion-card-content>
                 <ion-item>
-                  <ion-input ngModel required name="name" placeholder="Apodo" type="text" pattern="^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>
+                  <ion-input ngModel required name="name" placeholder="Apodo" type="text" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>
                 </ion-item>
                 <ion-item>
                   <ion-input ngModel required name="email" placeholder="Correo" type="email" pattern="^[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})$" minlength="3" maxlength="254"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input ngModel required name="password" placeholder="Contraseña de usuario" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$" minlength="8" maxlength="10"></ion-input>
+                  <ion-input ngModel required name="password" placeholder="Contraseña de usuario" [type]="passwordType1" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$" minlength="8" maxlength="10"></ion-input>
+                  <ion-icon slot="end" [name]="passwordIcon1" (click)="onMostrarEsconderPassword1()"></ion-icon>
                 </ion-item>
                 <ion-item>
-                  <ion-input ngModel required name="confirm" placeholder="Confirmar contraseña" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$" minlength="8" maxlength="10"></ion-input>
+                  <ion-input ngModel required name="confirm" placeholder="Confirmar contraseña" [type]="passwordType2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$" minlength="8" maxlength="10"></ion-input>
+                  <ion-icon slot="end" [name]="passwordIcon2" (click)="onMostrarEsconderPassword2()"></ion-icon>
                 </ion-item>
                 <div class="ion-padding">
                   <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Registrarse</ion-button>

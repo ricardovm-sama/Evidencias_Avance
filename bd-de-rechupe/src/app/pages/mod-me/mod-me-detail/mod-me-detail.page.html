@@ -8,37 +8,39 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-md="6" ion-align-self-center>
-        <ion-card>
-          <ion-card-content>
-            <ion-item>
-              <ion-label position="floating">Nombre</ion-label>
-              <ion-input placeholder="{{loadedMaterialExterno.nombre}}" type="text" [(ngModel)]="inputmodmenombre" pattern="^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Marca</ion-label>
-              <ion-input placeholder="{{loadedMaterialExterno.marca}}" type="text" [(ngModel)]="inputmodmemarca" pattern="^(?![ ]+$)[a-zA-Z .0-9$!%?&]{1,}$" minlength="1" maxlength="31"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Precio de referencia (₡)</ion-label>
-              <ion-input placeholder="{{loadedMaterialExterno.precio}}" type="text" [(ngModel)]="inputmodmeprecio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
-            </ion-item>           
-            <ion-item>
-              <ion-label position="floating">Unidades de referencia</ion-label>
-              <ion-input placeholder="{{loadedMaterialExterno.unidades}}" type="text" [(ngModel)]="inputmodmeunidades" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Unidades disponibles</ion-label>
-              <ion-input placeholder="{{loadedMaterialExterno.unidades_disp}}" type="text" [(ngModel)]="inputmodmeunidadesdisp" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
-            </ion-item>
-            <div ion-margin-vertical ion-text-right>
-              <ion-button (click)="OnModicarMaterialExterno()">Modificar Material Externo</ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <form #form="ngForm" (ngSubmit)="OnModicarMaterialExterno(form)">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" ion-align-self-center>
+          <ion-card>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input placeholder="{{loadedMaterialExterno.nombre}}" type="text" ngModel name="nombre" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Marca</ion-label>
+                <ion-input placeholder="{{loadedMaterialExterno.marca}}" type="text" ngModel name="marca" pattern="^(?![ ]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ .0-9$!%?&]{1,}$" minlength="1" maxlength="31"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Precio de referencia (₡)</ion-label>
+                <ion-input placeholder="{{loadedMaterialExterno.precio}}" type="text" ngModel name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>           
+              <ion-item>
+                <ion-label position="floating">Unidades de referencia</ion-label>
+                <ion-input placeholder="{{loadedMaterialExterno.unidades}}" type="text" ngModel name="unidades" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Unidades disponibles</ion-label>
+                <ion-input placeholder="{{loadedMaterialExterno.unidades_disp}}" type="text" ngModel name="unidades_disp" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+              </ion-item>
+              <div class="ion-padding">
+                <ion-button size="medium" type="submit" [disabled]="form.invalid" expand="block">Modificar Material Externo</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

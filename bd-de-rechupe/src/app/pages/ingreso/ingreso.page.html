@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-chip color="primary">
+  <ion-toolbar color="primary">
+    <ion-chip slot="start">
       <ion-avatar>
         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
       </ion-avatar>
-      <ion-label>BD De Rechupe</ion-label>
+      <ion-label color="light">BD De Rechupe</ion-label>
     </ion-chip>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
     <body>
      <ion-button (click)="irRegistro()">Registrarse</ion-button>
      <form #form="ngForm" (ngSubmit)="onIngresar(form)">
-       <ion-grid style="padding-top: 40px;">
+       <ion-grid style="padding-top: 45px;">
          <ion-row>
           <ion-col size-md="6" ion-align-self-center>
              <ion-card>
@@ -21,12 +21,11 @@
                 <ion-title ion-text-center color="dark">Iniciar Sesión</ion-title>
                  <ion-list>
                    <ion-item>
-                     <ion-label position="floating">Correo: </ion-label>
-                     <ion-input pattern="^[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})$" minlength="3" maxlength="254" type="email" ngModel required name="email"></ion-input>
+                     <ion-input placeholder="Correo" pattern="^[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})$" minlength="3" maxlength="254" type="email" ngModel required name="email"></ion-input>
                    </ion-item>
                    <ion-item>
-                     <ion-label position="floating">Contraseña: </ion-label>
-                     <ion-input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$" minlength="8" maxlength="10" type="password" ngModel required name="password"></ion-input>
+                     <ion-input placeholder="Contraseña de usuario" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$" minlength="8" maxlength="10" [type]="passwordType1" ngModel required name="password"></ion-input>
+                     <ion-icon slot="end" [name]="passwordIcon1" (click)="onMostrarEsconderPassword1()"></ion-icon>
                    </ion-item>
                    <div class="ion-padding">
                      <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Ingresar</ion-button>

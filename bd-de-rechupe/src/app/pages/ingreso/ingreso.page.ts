@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./ingreso.page.scss'],
 })
 export class IngresoPage implements OnInit {
+  passwordType1: string = 'password';
+  passwordIcon1: string = 'eye-off';
 
   constructor(
     public toastController: ToastController,
@@ -33,6 +35,12 @@ export class IngresoPage implements OnInit {
     });
     toast.present();
   }
+
+    // Función que esconde y muestra password del primer campo
+   onMostrarEsconderPassword1() {
+     this.passwordType1 = (this.passwordType1 === 'text' ? 'password' : 'text');
+     this.passwordIcon1 = (this.passwordIcon1 === 'eye-off' ? 'eye' : 'eye-off');
+   }
 
   // Función que inicia el proceso para iniciar sesión de usuario en la bd
   onIngresar(form) {

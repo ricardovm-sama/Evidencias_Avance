@@ -20,12 +20,6 @@ export class ModMeDetailPage implements OnInit {
     marca: ''
   };
 
-  inputmodmenombre = '';
-  inputmodmemarca = '';
-  inputmodmeprecio = '';
-  inputmodmeunidadesdisp = '';
-  inputmodmeunidades = '';
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private itemService: ItemService,
@@ -66,36 +60,7 @@ export class ModMeDetailPage implements OnInit {
   }
 
   // Función que modifica un material externo y luego redirecciona a la página anterior
-  OnModicarMaterialExterno() {
-    const patternNombre = new RegExp('^(?![ .0-9]+$)[a-zA-Z .0-9]{1,}$');
-    const patternMarca = new RegExp('^(?![ ]+$)[a-zA-Z .0-9$!%?&]{1,}$');
-    const patternUnidades = new RegExp('^(([1-9]{1}[0-9]{0,})|([0]{1}))$');
-
-    if (this.inputmodmenombre === '' && this.inputmodmemarca === '' && this.inputmodmeprecio === '' &&
-     this.inputmodmeunidadesdisp === '' && this.inputmodmeunidades === '') {
-      this.onToast('No se ha ingresado ningún valor');
-      return;
-    }
-    if (this.inputmodmenombre !== '' && !patternNombre.test(this.inputmodmenombre)) {
-      this.onToast('El nombre no es válido');
-      return;
-    }
-    if (this.inputmodmemarca !== '' && !patternMarca.test(this.inputmodmemarca)) {
-      this.onToast('La marca no es válida');
-      return;
-    }
-    if (this.inputmodmeprecio !== '' && !patternUnidades.test(this.inputmodmeprecio)) {
-      this.onToast('El precio de referencia no es válido');
-      return;
-    }
-    if (this.inputmodmeunidadesdisp !== '' && !patternUnidades.test(this.inputmodmeunidadesdisp)) {
-      this.onToast('Las unidades disponibles no son válidas');
-      return;
-    }
-    if (this.inputmodmeunidades !== '' && !patternUnidades.test(this.inputmodmeunidades)) {
-      this.onToast('Las unidades de referencia no son válidas');
-      return;
-    }
+  OnModicarMaterialExterno(form) {
     // Los datos de los inputs son correctos
     this.alertCtrl.create({
       header: '¿Estás seguro?',
@@ -107,8 +72,7 @@ export class ModMeDetailPage implements OnInit {
         text: 'Modificar',
         handler: () => {
           const cloneObject = Object.assign({}, this.loadedMaterialExterno);
-          this.itemService.modicarMaterialExterno(cloneObject, this.inputmodmenombre,
-          this.inputmodmemarca, this.inputmodmeprecio, this.inputmodmeunidadesdisp, this.inputmodmeunidades).subscribe((res) => {
+          this.itemService.modicarMaterialExterno(cloneObject, form.value).subscribe((res) => {
             if (res.data.nombre) { // Si existe
               this.loadedMaterialExterno.nombre = res.data.nombre;
               this.loadedMaterialExterno.marca = res.data.marca;

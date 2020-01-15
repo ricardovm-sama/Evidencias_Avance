@@ -21,11 +21,20 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
-              <!-- ESTO ES OPCIONAL (FUERA DEL ALCANCE DEL PROYECTO) 
-              <ion-item *ngFor="let receta of recetas | filtrotemprct: textoBuscar: rctsings: temporadas: meses: 'nombre': 'id'">
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px;">
+                  Recetas
+                </ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let receta of recetas | filtrotemprct: textoBuscar: rctsrcts: rctsings: temporadas: meses: 'nombre': 'id'">
                 <ion-label>{{ receta.nombre }}</ion-label>
                 <ion-icon name= "logo-buffer"> </ion-icon>
-              </ion-item>-->
+              </ion-item>
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px;">
+                  Ingredientes
+                </ion-label>
+              </ion-item-divider>   
               <ion-item *ngFor="let ingrediente of ingredientes | filtrotemping: textoBuscar: temporadas: meses: 'nombre': 'peso_disp'">
                 <ion-label>{{ ingrediente.nombre }}</ion-label>
                 <ion-icon name= "nutrition"> </ion-icon>

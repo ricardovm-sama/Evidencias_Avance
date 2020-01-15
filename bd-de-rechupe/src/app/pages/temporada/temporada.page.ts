@@ -16,6 +16,7 @@ export class TemporadaPage implements OnInit {
   ingredientes: Ingrediente[];
   recetas: Receta[] = [];
 
+  rctsrcts: any[] = [];
   rctsings: any[] = [];
   temporadas: any[] = [];
   meses = [
@@ -101,6 +102,11 @@ export class TemporadaPage implements OnInit {
     });
     this.itemService.getIngredientesTemporadas(iduser).subscribe((res) => { // Obtener ingredientes_temporadas
     this.temporadas = res.data;
+    });
+    this.itemService.getRecetasRecetas(iduser).subscribe((res) => { // Obtener recetas_recetas
+      if (res) {
+        this.rctsrcts = res.data;
+      }
     });
     }
   }

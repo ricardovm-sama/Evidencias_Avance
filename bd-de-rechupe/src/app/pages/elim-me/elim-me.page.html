@@ -15,6 +15,11 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px;">
+                  Materiales Externos
+                </ion-label>
+              </ion-item-divider>  
               <ion-item *ngFor="let materialexterno of materialesexternos | filtro: textoBuscar: 'nombre': 'unidades'" [routerLink]="['./', materialexterno.id]">
                 <ion-label>{{ materialexterno.nombre }}</ion-label>
                 <ion-icon name= "construct"> </ion-icon>

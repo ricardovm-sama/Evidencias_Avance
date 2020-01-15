@@ -36,3 +36,19 @@ Se realizó:
 3.	Funcionalidad “Confirmar si los ingredientes de un platillo se pueden conseguir en cierto mes desde la interfaz”
 4.	Funcionalidades de Mantenimiento de Materiales Externos (específicamente crear)
 
+Fecha: 14/1/2020
+Se hizo:
+1.	Implementación de las ventanas faltantes para el Frontend (Al fin se hicieron todas las páginas de la aplicación web)
+2.	Iteración 3 – ERS 
+3.	Iteración 3 – SAD 
+4.	Iteración 3 – Casos de Pruebas
+5.	Iteración 3 – Ejecución de Pruebas
+6.	Funcionalidades de Mantenimiento de Materiales Externos (específicamente eliminar)
+7.	Funcionalidades de Mantenimiento de Ingredientes (crear, modificar y eliminar)
+8.	Funcionalidades de Mantenimiento de Recetas (crear, modificar y eliminar)
+9.	Ahora se utiliza un modal para seleccionar los meses en la funcionalidad “Disponibilidad en Temporada” (antes era un widget de "select" de ionic, pero no permitía seleccionar todos los ítems a la vez)
+10.	Campos de texto ya no aceptan caracteres extraños. (esto le da mayor seguridad a la aplicación)
+11.	Campo de contraseña ya no acepta caracteres extraños. (esto le da mayor seguridad a la aplicación)
+12.	Campos de peso o porción ahora aceptan números enteros o flotantes. (para mayor comodidad del usuario, estos campos aceptan número enteros o flotantes)
+Posdata: - La minuta 8 y la carta de aceptación del cliente se firmaron hasta el día de hoy.
+         - Descubrí que ya tengo hecho el requerimiento técnico de tener https en el ambiente de desarrollo.

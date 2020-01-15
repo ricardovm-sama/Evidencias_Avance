@@ -105,9 +105,18 @@ export class CrearIngPage implements OnInit {
       return;
     }
     // Los datos de los inputs son correctos
+    const sinelegirmes = this.meses.every((elem) => {
+      return elem.selected === false;
+    });
+    let headermsj = '¿Estás seguro?';
+    let msj = '¿Deseas crear el ingrediente?';
+    if (sinelegirmes) {
+      headermsj = '¡No hay meses seleccionados!';
+      msj = '¿Deseas crear el ingrediente de todas formas?';
+    }
     this.alertCtrl.create({
-      header: '¿Estás seguro?',
-      message: '¿Deseas crear el ingrediente?',
+      header: headermsj,
+      message: msj,
       buttons: [{
         text: 'Cancelar',
         role: 'cancel'

@@ -686,5 +686,82 @@ borrarElementosContenidos(id: number, tipo: number) {
 
   }
 
+  // Función que muestra las cantidades actuales de los ítems a los que se les asignó cantidades en los campos, o
+  // muestra las cantidades actuales de todos los ítems del inventario (ingredientes y materiales externos).
+  async onValorActual() {
+    this.agregarCantidadporItem(); // Llamar función
+    let titulo = '';
+
+    this.resp = this.resp.filter( item => { // Obtener los items a los que realmente se les agregó cantidad
+      if (item) {
+        return item.valor !== null;
+      }
+    });
+
+    if (this.resp.length === 0) { // Si no se asignaron valores en los inputs
+      titulo = 'Actual todo:';
+      this.ingredientes.forEach((ing) => {
+        const obj = {
+          nombre: ing.nombre,
+          valor: ing.peso_disp,
+          tipo: 2,
+          iditem: ing.id
+        };
+        this.resp.push(obj);
+      });
+      this.materialesexternos.forEach((mte) => {
+        const obj = {
+          nombre: mte.nombre,
+          valor: mte.unidades_disp,
+          tipo: 3,
+          iditem: mte.id
+        };
+        this.resp.push(obj);
+      });
+    } else {
+      titulo = 'Actual seleccionado:';
+      this.resp.forEach((elem) => {
+        this.ingredientes.forEach((ing) => {
+          if (ing.id === elem.iditem && elem.tipo === 2) {
+            elem.valor = ing.peso_disp;
+          }
+        });
+      });
+      this.resp.forEach((elem) => {
+        this.materialesexternos.forEach((mte) => {
+          if (mte.id === elem.iditem && elem.tipo === 3) {
+            elem.valor = mte.unidades_disp;
+          }
+        });
+      });
+    }
+
+    let cloneresp = [];
+    cloneresp = JSON.parse(JSON.stringify(this.resp)); // clonar arreglo
+
+    cloneresp.forEach( item => { // Aplicar decimales y agregar símbolo a valor y disp
+        if (item.tipo === 3) { // Si son materiales externos
+          item.valor = Number((item.valor).toFixed(0)) + ' uds.';
+        } else {
+          item.valor = Number((item.valor).toFixed(2)) + ' g';
+        }
+      });
+
+    const modal = await this.modalCtrl.create({
+      component: ModalInfoPage,
+      componentProps: { // Pasar datos
+        obj: {
+        array:  cloneresp},
+        titulomodal: titulo,
+        activarboton: false
+      }
+      });
+    await modal.present();
+
+  }
+
+
+
+
 
 }

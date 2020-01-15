@@ -15,6 +15,11 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
+              <ion-item-divider color="secondary" sticky="true">
+                <ion-label style="font-size:20px;">
+                  Ingredientes
+                </ion-label>
+              </ion-item-divider>   
               <ion-item *ngFor="let ingrediente of ingredientes | filtro: textoBuscar: 'nombre': 'peso_disp'" [routerLink]="['./', ingrediente.id]">
                 <ion-label>{{ ingrediente.nombre }}</ion-label>
                 <ion-icon name= "nutrition"> </ion-icon>
