@@ -88,7 +88,7 @@ export class CrearIngPage implements OnInit {
     toast.present();
   }
 
-  // Función que modifica un material externo y luego redirecciona a la página anterior
+  // Función que crea el ingrediente y luego redirecciona a la página anterior
   OnCrearIngrediente(form) {
     const pesoref = Number(form.value.peso);
     const proteina = Number(form.value.proteina);
@@ -143,6 +143,7 @@ export class CrearIngPage implements OnInit {
                 console.log('Objeto2', obj2);
                 this.itemService.insertarTemporadasIngrediente(obj2).subscribe((elem) => {
                   if (elem.data) { // Si existe
+                    form.reset(); // Limpiar formulario
                     this.onToast('Operación exitosa!', 2000); // Desplegar mensaje de éxito
                     this.router.navigate(['/mainmenu']); // Redireccionar a la página anterior
                   }

@@ -10,8 +10,8 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./ingreso.page.scss'],
 })
 export class IngresoPage implements OnInit {
-  passwordType1: string = 'password';
-  passwordIcon1: string = 'eye-off';
+  passwordType1 = 'password';
+  passwordIcon1 = 'eye-off';
 
   constructor(
     public toastController: ToastController,

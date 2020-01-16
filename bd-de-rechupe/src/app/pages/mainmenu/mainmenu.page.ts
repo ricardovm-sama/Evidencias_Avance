@@ -96,20 +96,12 @@ export class MainmenuPage implements OnInit {
     }
   ];
 
- // selectedPath = '';
-
   constructor(
     private menuCtrl: MenuController,
     private alertCtrl: AlertController,
     private  authService: AuthService,
     private router: Router
      ) {}
-
- /* constructor(private router: Router) {
-    this.router.events.subscribe((event: RouterEvent) => {
-      this.selectedPath = event.url;
-    });
-  }*/
 
   ngOnInit() {
   }

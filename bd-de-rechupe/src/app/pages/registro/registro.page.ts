@@ -10,10 +10,10 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-  passwordType1: string = 'password';
-  passwordType2: string = 'password';
-  passwordIcon1: string = 'eye-off';
-  passwordIcon2: string = 'eye-off';
+  passwordType1 = 'password';
+  passwordType2 = 'password';
+  passwordIcon1 = 'eye-off';
+  passwordIcon2 = 'eye-off';
 
   constructor(
     public toastController: ToastController,

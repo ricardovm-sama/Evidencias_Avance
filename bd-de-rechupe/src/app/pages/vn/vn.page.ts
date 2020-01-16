@@ -41,7 +41,7 @@ export class VnPage implements OnInit {
     });
   }
 
-  // Función que carga la lista de materiales externos
+  // Función que carga las listas de ítems
   ionViewDidEnter() {
     const iduser = this.authService.getUserId();
     if (iduser) {

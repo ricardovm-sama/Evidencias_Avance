@@ -51,7 +51,7 @@ export class RealizarPage implements OnInit {
     });
   }
 
-  // Función que carga la lista de materiales externos
+  // Función que carga las listas de ítems
   ionViewDidEnter() {
     const iduser = this.authService.getUserId();
     if (iduser) {
@@ -81,24 +81,15 @@ getObjetoById(id: number, tipo: number) {
   switch (tipo) {
     case 1: // Si son recetas, ingredientes o materiales externos
       return this.rctvalores.filter( item => {
-        if (item) {
           return item.iditem === id;
-        }
-        return null;
       });
     case 2:
       return this.ingvalores.filter( item => {
-        if (item) {
           return item.iditem === id;
-        }
-        return null;
       });
     case 3:
       return this.mtevalores.filter( item => {
-        if (item) {
           return item.iditem === id;
-        }
-        return null;
       });
     }
 }

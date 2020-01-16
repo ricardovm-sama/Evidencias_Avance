@@ -36,7 +36,7 @@ export class CrearMePage implements OnInit {
     toast.present();
   }
 
-  // Función que modifica un material externo y luego redirecciona a la página anterior
+  // Función que crea el material externo y luego redirecciona a la página anterior
   OnCrearMaterialExterno(form) {
     // Los datos de los inputs son correctos
     this.alertCtrl.create({
@@ -57,6 +57,7 @@ export class CrearMePage implements OnInit {
             console.log('Objeto', obj);
             this.itemService.crearMaterialExterno(obj).subscribe((res) => {
               if (res.data) { // Si existe
+                form.reset(); // Limpiar formulario
                 this.onToast('Operación exitosa!'); // Desplegar mensaje de éxito
                 this.router.navigate(['/mainmenu']); // Redireccionar a la página anterior
               }

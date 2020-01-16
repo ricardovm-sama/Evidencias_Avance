@@ -15,5 +15,6 @@ export class FiltroPipe implements PipeTransform {
     }).sort((a, b) => (a[propiedad1] > b[propiedad1]) ? 1 :
     (a[propiedad1] === b[propiedad1]) ? ((a[propiedad2] > b[propiedad2]) ? 1 : -1) : -1 );
   }
-//  .sort((a, b) => (a.columna1 > b.columna1) ? 1 : (a.columna1 === b.columna1) ? ((a.columna2 > b.columna2) ? 1 : -1) : -1 );
+
+
 }

@@ -1,5 +1,7 @@
 {
   "name": "BD De Rechupe",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

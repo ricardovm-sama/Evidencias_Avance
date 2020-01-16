@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'mainmenu', pathMatch: 'full' },
+  { path: '', redirectTo: 'ingreso', pathMatch: 'full' },
   {
     path: 'ingreso',
     loadChildren: () => import('./pages/ingreso/ingreso.module').then( m => m.IngresoPageModule)

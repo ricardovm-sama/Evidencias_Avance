@@ -1,0 +1,8 @@
+{
+  "appId": "com.bdderechupe",
+  "appName": "BD De Rechupe",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
