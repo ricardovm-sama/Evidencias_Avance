@@ -52,3 +52,17 @@ Se hizo:
 12.	Campos de peso o porción ahora aceptan números enteros o flotantes. (para mayor comodidad del usuario, estos campos aceptan número enteros o flotantes)
 Posdata: - La minuta 8 y la carta de aceptación del cliente se firmaron hasta el día de hoy.
          - Descubrí que ya tengo hecho el requerimiento técnico de tener https en el ambiente de desarrollo.
+
+Fecha: 17/1/2020
+Está hecho:
+1.	Convertir Aplicación Web a una Aplicación Móvil Nativa (ahora tenemos una app web y una app móvil)
+2.	Plan de pruebas de aceptación (se actualizaron algunos casos de prueba)
+3.	Ejecución de pruebas de aceptación (las pruebas se ejecutaron de antemano)
+4.	Manual técnico de usuario (la app móvil no está disponible en ninguna app store, por lo que su proceso de instalación no es tan amigable)
+5.	Calificación usuario y evidencias (se obtuvo una calificación de 10!)
+6.	Entrega del proyecto al cliente (el cliente ahora puede utilizar tanto la app web como la móvil para su negocio)
+7.	Ahora se puede determinar la disponibilidad en temporada para las recetas
+8.	Se agregó el botón “Actual” en la ventana “realizar”, el cual permite ver las cantidades actuales disponibles del inventario (es un nuevo caso de uso, pero es un extra) 
+9.	En los campos de contraseña, se agregó un botón para ocultar o revelar la contraseña escrita en el campo de texto (implementarlos fue más fácil de lo que pensé)
+10.	Se logró que la aplicación móvil se conecte exitosamente al servidor local (hacer esto me costó bastante)
+11.	Ahora los formularios se limpian después de crear algún ítem (esto fué muy fácil de implementar con los formularios de Angular)
