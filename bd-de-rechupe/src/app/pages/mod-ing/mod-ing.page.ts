@@ -29,13 +29,13 @@ export class ModIngPage implements OnInit {
   ionViewDidEnter() {
       const iduser = this.authService.getUserId();
       if (iduser) {
-      console.log('UserID: ' + iduser);
-      this.itemService.getAllIngredientes(iduser).subscribe((res) => {
-        if (res) {
-          this.ingredientes = res.data;
-        }
+        console.log('UserID: ' + iduser);
+        this.itemService.getAllIngredientes(iduser).subscribe((res) => {
+          if (res) {
+            this.ingredientes = res.data;
+          }
         });
-    }
+      }
   }
   // Función que obtiene el texto introducido en la barra de búsqueda
   search( event ) {

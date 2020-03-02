@@ -16,11 +16,11 @@
             <ion-card-content>
               <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
-                <ion-input placeholder="Nombre" type="text" ngModel required name="nombre" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>
+                <ion-input placeholder="Nombre" type="text" ngModel required name="nombre" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="62"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Precio de referencia (₡)</ion-label>
-                <ion-input placeholder="0" type="text" ngModel required name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+                <ion-input placeholder="0" type="text" ngModel required name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Peso de referencia (g)</ion-label>
@@ -39,11 +39,11 @@
                 <ion-input placeholder="0" type="text" ngModel required name="proteina" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">Grasa (g)</ion-label>
+                <ion-label position="floating">Grasa Total (g)</ion-label>
                 <ion-input placeholder="0" type="text" ngModel required name="grasa" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">Carbohidratos (g)</ion-label>
+                <ion-label position="floating">Carbohidratos Totales (g)</ion-label>
                 <ion-input placeholder="0" type="text" ngModel required name="carbohidratos" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>
               </ion-item>
               <ion-item>

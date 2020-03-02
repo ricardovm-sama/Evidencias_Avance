@@ -55,16 +55,16 @@ ngOnInit() {
   ionViewDidEnter() {
     const iduser = this.authService.getUserId();
     let recetaId = '';
-    console.log('UserID: ' + iduser);
     if (iduser) {
+      console.log('UserID: ' + iduser);
       this.activatedRoute.paramMap.subscribe(paramMap => { // Obtener información de la ruta activada (segmento url dinámico).
         if (!paramMap.has('recetaId')) {
           this.router.navigate(['/elim-rct']); // Redireccionar a la página anterior
         }
         recetaId = paramMap.get('recetaId'); // Asignar el objeto correspondiente del id del url
       });
-      console.log('RECETAID: ', recetaId);
       if (recetaId !== '') {
+        console.log('RECETAID: ', recetaId);
         this.recetaId = recetaId;
         this.itemService.getAllMaterialesExternos(iduser).subscribe((res) => { // Obtener materiales externos
         if (res) {
@@ -174,7 +174,6 @@ ngOnInit() {
         alertElem.present();
     });
   }
-
 
 
 

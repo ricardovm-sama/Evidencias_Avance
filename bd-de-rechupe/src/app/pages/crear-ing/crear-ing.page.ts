@@ -97,11 +97,17 @@ export class CrearIngPage implements OnInit {
     const fibra = Number(form.value.fibra);
     const colesterol = Number(form.value.colesterol) / 1000;
     const sodio = Number(form.value.sodio) / 1000;
-    const suma = Number(proteina + grasa + carbohidratos + fibra + colesterol + sodio);
+    const suma = Number(proteina + grasa + carbohidratos + colesterol + sodio);
+    if (fibra > carbohidratos) {
+      console.log('Fibra: ', fibra);
+      console.log('Carbohibratos: ', carbohidratos);
+      this.onToast('La fibra debe ser menor o igual a los carbohidratos totales', 2750); // Desplegar mensaje de error
+      return;
+    }
     if (pesoref < suma) {
       console.log('Pesoref: ', pesoref);
       console.log('Suma: ', suma);
-      this.onToast('La suma en gramos debe ser menor o igual al peso de referencia', 2750); // Desplegar mensaje de error
+      this.onToast('La suma total en gramos debe ser menor o igual al peso de referencia', 2750); // Desplegar mensaje de error
       return;
     }
     // Los datos de los inputs son correctos

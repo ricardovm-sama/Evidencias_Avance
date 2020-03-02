@@ -16,15 +16,15 @@
             <ion-card-content>
               <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
-                <ion-input placeholder="{{loadedMaterialExterno.nombre}}" type="text" ngModel name="nombre" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="31"></ion-input>
+                <ion-input value="{{loadedMaterialExterno.nombre}}" type="text" ngModel name="nombre" pattern="^(?![ .0-9]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ .0-9]{1,}$" minlength="1" maxlength="62"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Marca</ion-label>
-                <ion-input placeholder="{{loadedMaterialExterno.marca}}" type="text" ngModel name="marca" pattern="^(?![ ]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ .0-9$!%?&]{1,}$" minlength="1" maxlength="31"></ion-input>
+                <ion-input value="{{loadedMaterialExterno.marca}}" type="text" ngModel name="marca" pattern="^(?![ ]+$)[a-zA-ZñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙ .0-9$!&]{1,}$" minlength="1" maxlength="62"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Precio de referencia (₡)</ion-label>
-                <ion-input placeholder="{{loadedMaterialExterno.precio}}" type="text" ngModel name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))$" minlength="1" maxlength="13"></ion-input>
+                <ion-input placeholder="{{loadedMaterialExterno.precio}}" type="text" ngModel name="precio" pattern="^(([1-9]{1}[0-9]{0,})|([0]{1}))([.]{1}[0-9]{1,})?$" minlength="1" maxlength="13"></ion-input>
               </ion-item>           
               <ion-item>
                 <ion-label position="floating">Unidades de referencia</ion-label>

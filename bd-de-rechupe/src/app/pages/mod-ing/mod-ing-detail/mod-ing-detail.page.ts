@@ -4,6 +4,7 @@ import { ItemService } from '../../../item.service';
 import { Ingrediente } from 'src/app/ingrediente.model';
 import { ToastController, AlertController, ModalController } from '@ionic/angular';
 import { ModalCheckPage } from '../../modal-check/modal-check.page';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-mod-ing-detail',
@@ -16,7 +17,7 @@ export class ModIngDetailPage implements OnInit {
   loadedIngrediente: Ingrediente = {
     id: 0,
     iduser: 0,
-    nombre: '',
+    nombre: 'NA',
     precio: 0,
     peso: 0.00,
     peso_disp: 0.00,
@@ -83,6 +84,7 @@ export class ModIngDetailPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private itemService: ItemService,
+    private  authService: AuthService,
     public toastController: ToastController,
     private router: Router,
     private alertCtrl: AlertController,
@@ -90,40 +92,55 @@ export class ModIngDetailPage implements OnInit {
     ) { }
 
   ngOnInit() {
-
+    this.authService.getKeyValue('userId').then((iduser) => {
+      if (iduser) {
+        this.authService.setUserId(iduser);
+      }
+    });
   }
 
   // Función que carga la lista de ingredientes
   ionViewWillEnter() {
     console.log('DETALLES DEL INGREDIENTE');
     let ingredienteId = '';
-    this.activatedRoute.paramMap.subscribe(paramMap => { // Obtener información de la ruta activada (segmento url dinámico).
-      if (!paramMap.has('ingredienteId')) {
-        this.router.navigate(['/mod-ing']); // Redireccionar a la página anterior
-      }
-      ingredienteId = paramMap.get('ingredienteId'); // Asignar el objeto correspondiente del id del url
-    });
-
-    this.itemService.getIngrediente(Number(ingredienteId)).subscribe((res) => {
-      if (res) {
-        this.loadedIngrediente = res.data;
-        console.log('Ingrediente cargado', this.loadedIngrediente);
-        this.itemService.getIngredienteTemporadas(this.loadedIngrediente.id).subscribe((tempelem) => {
-          if (tempelem) {
-            this.temporadas = tempelem.data;
-            console.log('temporadas', this.temporadas);
-            const mesesnom = this.temporadas.map(elem => elem.temp); // Obtener arreglo de sólo los nombres de los meses seleccionados
-            this.meses.forEach((elem) => { // Actualizar el arreglo de meses con información de la bd
-              mesesnom.forEach((mesnom) => {
-                if (elem.nombre === mesnom) {
-                  elem.selected = true;
+    const iduser = this.authService.getUserId();
+    if (iduser) { // Si el usuario está en sesión
+      console.log('UserID: ' + iduser);
+      this.activatedRoute.paramMap.subscribe(paramMap => { // Obtener información de la ruta activada (segmento url dinámico).
+        if (!paramMap.has('ingredienteId')) { // No hay item seleccionado
+          this.router.navigate(['/mod-ing']); // Redireccionar a la página anterior
+        }
+        ingredienteId = paramMap.get('ingredienteId'); // Asignar el objeto correspondiente del id del url
+        this.itemService.getAllIngredientes(iduser).subscribe((res) => { // Obtener todos los items
+          if (res) {
+            const conjuntoids = res.data.map(elem => elem.id); // Obtener arreglo de sólo los ids de los items del usuario
+            if (conjuntoids.includes(Number(ingredienteId))) { // El item pertenece al usuario
+              const array = res.data.filter((item) => {
+                return item.id === Number(ingredienteId);
+              });
+              this.loadedIngrediente = array[0]; // Asignar item seleccionado
+              console.log('Ingrediente cargado', this.loadedIngrediente);
+              this.itemService.getIngredienteTemporadas(this.loadedIngrediente.id).subscribe((tempelem) => {
+                if (tempelem) {
+                  this.temporadas = tempelem.data;
+                  console.log('temporadas', this.temporadas);
+                  const mesesnom = this.temporadas.map(elem => elem.temp); // Obtener arreglo de sólo los nombres de los meses seleccionados
+                  this.meses.forEach((elem) => { // Actualizar el arreglo de meses con información de la bd
+                    mesesnom.forEach((mesnom) => {
+                      if (elem.nombre === mesnom) {
+                        elem.selected = true;
+                      }
+                    });
+                  });
                 }
               });
-            });
+            }
           }
         });
-      }
-  });
+      });
+    }
+
+
   }
 
   // Función auxiliar. Crea el toast y lo muestra (con el mensaje recibido a través del input)
@@ -145,31 +162,37 @@ export class ModIngDetailPage implements OnInit {
     let colesterol = Number(form.value.colesterol) / 1000;
     let sodio = Number(form.value.sodio) / 1000;
     if (form.value.peso === '') {
-      pesoref = this.loadedIngrediente.peso;
+      pesoref = Number(this.loadedIngrediente.peso);
     }
     if (form.value.proteina === '') {
-      proteina = this.loadedIngrediente.proteina;
+      proteina = Number(this.loadedIngrediente.proteina);
     }
     if (form.value.grasa === '') {
-      grasa = this.loadedIngrediente.grasa;
+      grasa = Number(this.loadedIngrediente.grasa);
     }
     if (form.value.carbohidratos === '') {
-      carbohidratos = this.loadedIngrediente.carbohidratos;
+      carbohidratos = Number(this.loadedIngrediente.carbohidratos);
     }
     if (form.value.fibra === '') {
-      fibra = this.loadedIngrediente.fibra;
+      fibra = Number(this.loadedIngrediente.fibra);
     }
     if (form.value.colesterol === '') {
-      colesterol = this.loadedIngrediente.colesterol;
+      colesterol = Number(this.loadedIngrediente.colesterol) / 1000;
     }
     if (form.value.sodio === '') {
-      sodio = this.loadedIngrediente.sodio;
+      sodio = Number(this.loadedIngrediente.sodio) / 1000;
     }
-    const suma = Number(proteina + grasa + carbohidratos + fibra + colesterol + sodio);
+    const suma = Number(proteina + grasa + carbohidratos + colesterol + sodio);
+    if (fibra > carbohidratos) {
+      console.log('Fibra: ', fibra);
+      console.log('Carbohibratos: ', carbohidratos);
+      this.onToast('La fibra debe ser menor o igual a los carbohidratos totales', 2750); // Desplegar mensaje de error
+      return;
+    }
     if (pesoref < suma) {
       console.log('Pesoref: ', pesoref);
       console.log('Suma: ', suma);
-      this.onToast('La suma en gramos debe ser menor o igual al peso de referencia', 2750); // Desplegar mensaje de error
+      this.onToast('La suma total en gramos debe ser menor o igual al peso de referencia', 2750); // Desplegar mensaje de error
       return;
     }
     // Los datos de los inputs son correctos
