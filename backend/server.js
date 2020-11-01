@@ -1171,7 +1171,7 @@ router.post("/api/realizar/", (req, res, next) => {
 // PUERTO SERVIDOR
 app.use(router);
 const  port  =  process.env.PORT  ||  3000;
-const  server  =  app.listen(port, () => {
+const  server  =  app.listen(port, '192.168.100.11', () => {
     console.log('Server listening at http://localhost:'  +  port);
 }); 
 
