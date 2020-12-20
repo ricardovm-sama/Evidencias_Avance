@@ -9,8 +9,7 @@ import { Ingrediente } from './ingrediente.model';
   providedIn: 'root'
 })
 export class ItemService {
-  // AUTH_SERVER_ADDRESS =  'http://localhost:3000';
-  AUTH_SERVER_ADDRESS =  'http://192.168.100.11:3000';
+  AUTH_SERVER_ADDRESS =  'http://220.144.1.103:3000';
 
   constructor(private  httpClient: HttpClient) { }
 // --------------------------------------------------------------------------------------------------------------------------------

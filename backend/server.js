@@ -1171,8 +1171,8 @@ router.post("/api/realizar/", (req, res, next) => {
 // PUERTO SERVIDOR
 app.use(router);
 const  port  =  process.env.PORT  ||  3000;
-const  server  =  app.listen(port, '192.168.100.11', () => {
-    console.log('Server listening at http://localhost:'  +  port);
+const  server  =  app.listen(port, '220.144.1.103', () => {
+    console.log('Server listening at http://220.144.1.103:'  +  port);
 }); 
 
 /*router.put('/api/materialexterno/mod/:id', (req, res) => { // Modificar Material Externo

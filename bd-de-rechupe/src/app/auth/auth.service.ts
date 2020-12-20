@@ -11,8 +11,7 @@ import { AuthResponse } from './authresponse.model';
   providedIn: 'root'
 })
 export class AuthService {
-  // AUTH_SERVER_ADDRESS  =  'http://localhost:3000';
-  AUTH_SERVER_ADDRESS =  'http://192.168.100.11:3000';
+  AUTH_SERVER_ADDRESS  =  'http://220.144.1.103:3000';
 
   authSubject: BehaviorSubject<boolean>  =  new  BehaviorSubject(false);
   private userId: number;
